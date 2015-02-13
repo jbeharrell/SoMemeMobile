@@ -1,4 +1,4 @@
-package com.example.jon.someme.arrayAdaptors;
+package com.example.jon.someme.adaptors;
 
 import android.content.Context;
 import android.view.LayoutInflater;
