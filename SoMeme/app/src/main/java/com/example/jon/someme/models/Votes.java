@@ -1,4 +1,4 @@
-package com.example.jon.someme;
+package com.example.jon.someme.models;
 
 import org.json.JSONObject;
 

@@ -1,12 +1,14 @@
-package com.example.jon.someme;
+package com.example.jon.someme.arrayAdaptors;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.jon.someme.models.ListMeme;
+import com.example.jon.someme.R;
 
 import java.util.ArrayList;
 
