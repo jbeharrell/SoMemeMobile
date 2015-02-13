@@ -20,7 +20,7 @@ public class MemeListArrayAdaptor extends ArrayAdapter<ListMeme> {
     private ArrayList<ListMeme> memes;
 
     public MemeListArrayAdaptor(Context context, ArrayList<ListMeme> memes) {
-        super(context, R.layout.meme_list_item, memes);
+        super(context, R.layout.list_item_memes, memes);
         this.context = context;
         this.memes = memes;
     }
@@ -30,7 +30,7 @@ public class MemeListArrayAdaptor extends ArrayAdapter<ListMeme> {
         if(row == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.meme_list_item, parent, false);
+            row = inflater.inflate(R.layout.list_item_memes, parent, false);
         }
 
         TextView votePosView = (TextView) row.findViewById(R.id.vote_pos);

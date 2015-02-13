@@ -1,4 +1,4 @@
-package com.example.jon.someme.Activities;
+package com.example.jon.someme.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
