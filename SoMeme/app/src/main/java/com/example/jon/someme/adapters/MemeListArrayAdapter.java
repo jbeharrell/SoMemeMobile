@@ -1,4 +1,4 @@
-package com.example.jon.someme.adaptors;
+package com.example.jon.someme.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,12 +15,12 @@ import java.util.ArrayList;
 /**
  * Created by Jon on 2/13/2015.
  */
-public class MemeListArrayAdaptor extends ArrayAdapter<ListMeme> {
+public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
     private Context context;
     private ArrayList<ListMeme> memes;
 
-    public MemeListArrayAdaptor(Context context, ArrayList<ListMeme> memes) {
-        super(context, R.layout.list_item_memes, memes);
+    public MemeListArrayAdapter(Context context, ArrayList<ListMeme> memes) {
+        super(context, R.layout.list_item_meme, memes);
         this.context = context;
         this.memes = memes;
     }
@@ -30,7 +30,7 @@ public class MemeListArrayAdaptor extends ArrayAdapter<ListMeme> {
         if(row == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.list_item_memes, parent, false);
+            row = inflater.inflate(R.layout.list_item_meme, parent, false);
         }
 
         TextView votePosView = (TextView) row.findViewById(R.id.vote_pos);

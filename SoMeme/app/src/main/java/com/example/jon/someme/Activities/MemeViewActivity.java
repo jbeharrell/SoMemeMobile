@@ -4,29 +4,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.example.jon.someme.R;
 
-
-public class MainActivity extends ActionBarActivity {
-
-    private ListView memeListView;
+public class MemeViewActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        memeListView = (ListView) findViewById(R.id.memeList);
-
-        // Adaptor
+        setContentView(R.layout.activity_meme_view);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_meme_view, menu);
         return true;
     }
 
