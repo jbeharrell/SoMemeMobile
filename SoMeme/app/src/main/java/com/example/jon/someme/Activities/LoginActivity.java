@@ -7,6 +7,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +30,7 @@ public class LoginActivity extends Activity {
     Button login;
 
     // url to create new product
-    private static String url_login = "http://192.168.2.11/finalapp/data/authenticate.php";
+    private static String url_login = "http://192.168.2.11:80/finalapp/data/authenticate.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -110,12 +111,17 @@ public class LoginActivity extends Activity {
             try {
                 int success = json.getInt(TAG_SUCCESS);
                if (success == 1) {
+
+                   //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
                     //successfully created product
-                    //Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
-                    //startActivity(i);
+                    Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    startActivity(i);
                     //closing this screen
-                   Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
-                   finish();
+// sending pid to next activity
+                   //i.putExtra(TAG_PID, pid);
+
+                   // starting new activity and expecting some response back
+                   //startActivityForResult(in, 100);
                 } else {
                     //failed to create product
                 }
