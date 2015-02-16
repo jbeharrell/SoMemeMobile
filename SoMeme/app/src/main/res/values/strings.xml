@@ -5,6 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_meme_view">MemeViewActivity</string>
+    <string name="title_activity_meme_list">MemeListActivity</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
