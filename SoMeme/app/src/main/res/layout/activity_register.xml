@@ -41,6 +41,7 @@
         android:text="Username" android:textColor="#9fff78"/>
 
     <EditText android:id="@+id/username"
+        android:maxLength="11"
         android:layout_height="34dp"
         android:layout_width="fill_parent"
         android:singleLine="true"
@@ -84,7 +85,8 @@
         android:layout_weight="0.04"
         android:paddingLeft="3dip"
         android:paddingRight="3dip"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:inputType="textEmailAddress"/>
 
     <!-- Password Label -->
     <TextView android:layout_height="wrap_content"
@@ -129,15 +131,15 @@
         android:textColor="#9fff78"
         android:layout_marginTop="5dip" />
 
-    <EditText android:id="@+id/gender"
+    <Spinner
+        android:layout_width="match_parent"
         android:layout_height="34dp"
-        android:layout_width="fill_parent"
-        android:singleLine="true"
+        android:id="@+id/gender"
         android:layout_marginTop="5dip"
+        android:entries="@array/gender_array"
+        android:layout_gravity="center_horizontal"
         android:background="#9fff78"
-        android:layout_weight="0.04"
-        android:paddingLeft="3dip"
-        android:paddingRight="3dip"
+        android:choiceMode="singleChoice"
         android:textColor="@android:color/black"/>
 
     <!-- Password Label -->
@@ -148,6 +150,10 @@
         android:layout_marginTop="5dip" />
 
     <EditText android:id="@+id/dob"
+        android:inputType="date"
+        android:ems="10"
+        android:maxLength="10"
+        android:hint="1970-01-30"
         android:layout_height="34dp"
         android:layout_width="fill_parent"
         android:singleLine="true"

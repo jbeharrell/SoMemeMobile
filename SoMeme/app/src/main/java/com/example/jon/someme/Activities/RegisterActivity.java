@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.jon.someme.R;
 
@@ -34,7 +37,7 @@ public class RegisterActivity extends ActionBarActivity{
         EditText fname;
         EditText lname;
         EditText birthDate;
-        EditText gender;
+        Spinner gender;
         EditText country;
         Button register;
         Button login;
@@ -70,13 +73,24 @@ public class RegisterActivity extends ActionBarActivity{
             fname = (EditText) findViewById(R.id.fname);
             lname = (EditText) findViewById(R.id.lname);
             birthDate = (EditText) findViewById(R.id.dob);
-            gender = (EditText) findViewById(R.id.gender);
+            gender = (Spinner) findViewById(R.id.gender);
             country = (EditText) findViewById(R.id.country);
             //inputDesc = (TextView) findViewById(R.id.inputDesc);
 
             // Create button
 //        Button btnCreateProduct = (Button) findViewById(R.id.login);
 
+
+//            username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//
+//                    if (hasFocus) {
+//                        if (username.getText().toString().trim().length() < 3) {
+//                            username.setError("Failed");
+//                        } else {
+//                            username.setError(null);
+//                        }}}});
 
             login.setOnClickListener(new View.OnClickListener() {
 
@@ -94,10 +108,64 @@ public class RegisterActivity extends ActionBarActivity{
                 @Override
                 public void onClick(View view) {
                     // creating new product in background thread
-                    new VerifyAccountCreation().execute();
+                    //validate before sending
+                    boolean AreDetailsValid = onSubmitClicked(view);
+
+                    if(AreDetailsValid) {
+                        new VerifyAccountCreation().execute();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Sorry, details are not correct!", Toast.LENGTH_SHORT);
+                    }
                 }
             });
         }
+
+    public boolean onSubmitClicked(View v) {
+        String user = username.getText().toString();
+        String pass = password.getText().toString();
+        String fn = fname.getText().toString();
+        String ln = lname.getText().toString();
+        String em = email.getText().toString();
+        String dob = birthDate.getText().toString();
+        String cntry = country.getText().toString();
+
+        if(TextUtils.isEmpty(user) || user.length() < 4 || user.length() > 12) {
+            username.setError("Username must be between 4 and 11 characters in length.");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(pass) || pass.length() < 6) {
+            password.setError("You must have at least 6 characters in your password.");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(fn) || fn.length() < 1) {
+            fname.setError("First name cannot be blank!");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(ln) || ln.length() < 1) {
+            lname.setError("Last name cannot be blank!");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(em) || em.length() < 1) {
+            email.setError("Email must be in proper email format.");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(dob) || dob.length() < 10) {
+            birthDate.setError("You must have fill in your date of birth.");
+            return false;
+        }
+
+        if(TextUtils.isEmpty(cntry) || cntry.length() < 1) {
+            country.setError("You must choose a country.");
+            return false;
+        }
+
+        return true;
+    }
 
         /**
          * Background Async Task to Create new account
@@ -116,7 +184,7 @@ public class RegisterActivity extends ActionBarActivity{
                 pDialog.setCancelable(true);
                 pDialog.show();
             }
-
+//            String text = spinner.getSelectedItem().toString();
             /**
              * Creating account
              */
@@ -127,7 +195,7 @@ public class RegisterActivity extends ActionBarActivity{
                 String fn = fname.getText().toString();
                 String ln = lname.getText().toString();
                 String dob = birthDate.getText().toString();
-                String gen = gender.getText().toString();
+                String gen = gender.getSelectedItem().toString();
                 String cntry = country.getText().toString();
 
                 // Building Parameters
