@@ -10,7 +10,7 @@
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="178dp"
+        android:layout_width="224dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
         android:text="Register"
@@ -21,7 +21,7 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="178dp"
+        android:layout_width="224dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
         android:text="Login"
@@ -40,7 +40,7 @@
         android:layout_marginBottom="20dip"
         android:layout_marginTop="5dip"
         android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
+        android:background="#9fff78"
         android:layout_weight="0.04"
         android:paddingLeft="3dip"
         android:paddingRight="3dip" />
@@ -58,7 +58,7 @@
         android:layout_marginTop="5dip"
         android:password="true"
         android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
+        android:background="#9fff78"
         android:layout_weight="0.04"
         android:paddingLeft="3dip"
         android:paddingRight="3dip" />

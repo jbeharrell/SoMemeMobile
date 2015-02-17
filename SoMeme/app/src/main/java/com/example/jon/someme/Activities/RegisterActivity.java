@@ -100,7 +100,7 @@ public class RegisterActivity extends ActionBarActivity{
         }
 
         /**
-         * Background Async Task to Create new product
+         * Background Async Task to Create new account
          */
         class VerifyAccountCreation extends AsyncTask<String, String, String> {
 
@@ -118,18 +118,17 @@ public class RegisterActivity extends ActionBarActivity{
             }
 
             /**
-             * Creating product
+             * Creating account
              */
             protected String doInBackground(String... args) {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-                String em = password.getText().toString();
-                String fn = password.getText().toString();
-                String ln = password.getText().toString();
-                String dob = password.getText().toString();
-                String gen = password.getText().toString();
-                String cntry = password.getText().toString();
-//            String description = inputDesc.getText().toString();
+                String em = email.getText().toString();
+                String fn = fname.getText().toString();
+                String ln = lname.getText().toString();
+                String dob = birthDate.getText().toString();
+                String gen = gender.getText().toString();
+                String cntry = country.getText().toString();
 
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
