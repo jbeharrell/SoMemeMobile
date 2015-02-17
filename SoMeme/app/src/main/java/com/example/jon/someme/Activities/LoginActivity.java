@@ -29,6 +29,7 @@ public class LoginActivity extends ActionBarActivity {
     EditText username;
     EditText password;
     Button login;
+    Button register;
 
     // url to create new product
     private static String url_login = "http://192.168.2.11:80/finalapp/data/authenticate.php";
@@ -46,6 +47,7 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
 
         login = (Button) findViewById(R.id.btnLogin);
+        register = (Button)findViewById(R.id.btnRegister);
 //        TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
 
         // Listening to register new account link
@@ -58,6 +60,15 @@ public class LoginActivity extends ActionBarActivity {
 
         // Create button
 //        Button btnCreateProduct = (Button) findViewById(R.id.login);
+        register.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                // creating new product in background thread
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+            }
+        });
 
         // button click event
         login.setOnClickListener(new View.OnClickListener() {
