@@ -1,5 +1,9 @@
 package com.example.jon.someme.models;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -13,6 +17,15 @@ public class MemeListData {
 
     public MemeListData(ArrayList<ListMeme> memes) {
         this.memes = memes;
+    }
+
+    public MemeListData(JSONArray json) throws JSONException {
+        Log.i("jon", "memeListData json: "+json.toString());
+        memes = new ArrayList<ListMeme>();
+        for (int i = 0; i < json.length(); i++) {
+            ListMeme meme = new ListMeme(json.getJSONObject(i));
+            memes.add(meme);
+        }
     }
 
     public ArrayList<ListMeme> getMemes() {

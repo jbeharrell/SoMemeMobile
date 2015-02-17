@@ -1,5 +1,8 @@
 package com.example.jon.someme.models;
 
+import android.util.Log;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -13,6 +16,12 @@ public class OwnerUser {
     public OwnerUser(int id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    public OwnerUser(JSONObject json) throws JSONException {
+        Log.i("jon", "owneruser json: "+json.toString());
+        id = json.getInt("id");
+        username = json.getString("username");
     }
 
     public int getId() {

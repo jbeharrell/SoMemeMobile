@@ -1,5 +1,8 @@
 package com.example.jon.someme.models;
 
+import android.util.Log;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -12,6 +15,12 @@ public class Votes {
     public Votes(int positive, int negative){
         this.positive = positive;
         this.negative = negative;
+    }
+
+    public Votes(JSONObject json) throws JSONException {
+        Log.i("jon", "Votes json: "+json.toString());
+        positive = json.getInt("pos");
+        negative = json.getInt("neg");
     }
 
     public int getPositive() {

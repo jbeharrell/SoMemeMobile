@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.jon.someme.models.MemeListData;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -25,22 +27,23 @@ import java.io.IOException;
  * Created by Jon on 2/13/2015.
  */
 public class AsyncMemeListData extends AsyncTask<Void, Void, JSONArray> {
-    private final String url = "http://localhost/SoMeme/data/memeListData.php";
+    private final String url = Constants.memeList;
 
     protected JSONArray doInBackground(Void... v) {
         try {
 
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost();
-            post.setHeader("localhost", url);
+            HttpPost post = new HttpPost(url);
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
 
             return new JSONArray(EntityUtils.toString(entity));
 
         } catch (ClientProtocolException e){
+            e.printStackTrace();
             cancel(true);
         } catch (IOException e) {
+            e.printStackTrace();
             cancel(true);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -50,9 +53,13 @@ public class AsyncMemeListData extends AsyncTask<Void, Void, JSONArray> {
     }
 
     protected void onPostExecute(JSONArray json) {
-
         try {
-            Log.i("jon", ""+json.getJSONObject(0).getInt("id"));
+
+            Log.i("jon", "main json: "+json.toString());
+            MemeListData memeListData = new MemeListData(json);
+
+            // Render view
+
         }catch (JSONException e) {
             e.printStackTrace();
         }

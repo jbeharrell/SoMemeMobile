@@ -1,5 +1,8 @@
 package com.example.jon.someme.models;
 
+import android.util.Log;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -22,6 +25,17 @@ public class ListMeme {
         this.views = views;
         this.owner = owner;
         this.votes = votes;
+    }
+
+    public ListMeme(JSONObject json) throws JSONException {
+        Log.i("jon", "listMeme json: "+json.toString());
+        id = json.getInt("id");
+        title = json.getString("title");
+        sourceLink = json.getString("source_link");
+        timestamp = json.getString("timestamp");
+        views = json.getInt("views");
+        owner = new OwnerUser(json.getJSONObject("user"));
+        votes = new Votes(json.getJSONObject("votes"));
     }
 
     public int getId() {
