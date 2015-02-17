@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical" >
+
+<Button android:id="@+id/btnRegister"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dip"
+    android:text="Register"/>
+
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Username" android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/username"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginBottom="20dip"
+        android:layout_marginTop="5dip"/>
+
+    <!-- Password Label -->
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Password"
+        android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/password"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginTop="5dip"/>
+
+    <!-- Password Label -->
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Email"
+        android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/email"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginTop="5dip"/>
+
+    <!-- Password Label -->
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="First Name"
+        android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/fname"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginTop="5dip"/>
+
+    <!-- Password Label -->
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Last Name"
+        android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/lname"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginTop="5dip"/>
+
+    <!-- Password Label -->
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Gender"
+        android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/gender"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginTop="5dip"/>
+
+    <!-- Password Label -->
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Date of Birth"
+        android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/dob"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginTop="5dip"/>
+
+    <!-- Password Label -->
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Country"
+        android:textColor="#372c24"/>
+
+    <EditText android:id="@+id/country"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:singleLine="true"
+        android:layout_marginTop="5dip"/>
+
+
+
+    <!-- Login button -->
+
+
+    <!--&lt;!&ndash; Link to Registration Screen &ndash;&gt;-->
+    <!--<TextView android:id="@+id/username"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="40dip"-->
+        <!--android:layout_marginBottom="40dip"-->
+        <!--android:text="New to Twitter? Register here"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="20dip"-->
+        <!--android:textColor="#0b84aa"/>-->
+
+    <!--&lt;!&ndash; Link to Registration Screen &ndash;&gt;-->
+    <!--<TextView android:id="@+id/password"-->
+        <!--android:password="true"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="40dip"-->
+        <!--android:layout_marginBottom="40dip"-->
+        <!--android:text="New to Twitter? Register here"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="20dip"-->
+        <!--android:textColor="#0b84aa"/>-->
+
+</LinearLayout>
+    </ScrollView>

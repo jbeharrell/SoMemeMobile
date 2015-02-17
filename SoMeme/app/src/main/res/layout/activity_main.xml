@@ -21,6 +21,16 @@
     android:background="#000000"
     android:textColor="#9fff78"/>
 
+    <Button android:id="@+id/link_to_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:gravity="center"
+        android:textSize="20dip"
+        android:layout_marginTop="10dip"
+        android:background="#000000"
+        android:textColor="#9fff78"/>
+
     <Button android:id="@+id/btnMemeList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

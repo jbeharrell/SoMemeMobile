@@ -16,6 +16,7 @@ public class MainActivity extends ActionBarActivity {
     Button btnLogin;
     Button btnMemeList;
     Button btnProfile;
+    Button btnRegister;
 
 
     @Override
@@ -23,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnLogin = (Button) findViewById(R.id.link_to_login);
+        btnRegister = (Button) findViewById(R.id.link_to_register);
         btnMemeList = (Button) findViewById(R.id.btnMemeList);
         btnProfile = (Button) findViewById(R.id.btnProfile);
 
@@ -53,6 +55,17 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                startActivity(i);
+            }
+        });
+
+
+        //Listening to register new account link
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
             }
         });
