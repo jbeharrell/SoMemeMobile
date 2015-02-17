@@ -5,40 +5,19 @@
     android:background="@android:color/black">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
     android:weightSum="1"
+    android:layout_gravity="center_horizontal"
     android:background="@android:color/black">
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="224dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:text="Login"
-        android:background="#9fff78"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="5dip"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="224dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dip"
-        android:text="Register"
-        android:background="#9fff78"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="20dip"
-        android:layout_gravity="center_horizontal" />
-
 
     <TextView android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="Username" android:textColor="#9fff78"/>
+        android:text="Username" android:textColor="#9fff78"
+        android:layout_marginTop="10dip" />
 
     <EditText android:id="@+id/username"
         android:maxLength="11"
@@ -182,6 +161,27 @@
         android:paddingRight="3dip"
         android:textColor="@android:color/black"/>
 
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="224dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:text="Login"
+        android:background="#9fff78"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="5dip"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="224dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:text="Register"
+        android:background="#9fff78"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="20dip"
+        android:layout_gravity="center_horizontal" />
 
 
     <!-- Login button -->
