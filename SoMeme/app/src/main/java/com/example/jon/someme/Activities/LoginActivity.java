@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -75,15 +76,38 @@ public class LoginActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                // creating new product in background thread
-                new VerifyLogin().execute();
+
+                boolean AreDetailsValid = onSubmitClicked(view);
+
+                if(AreDetailsValid) {
+                    new VerifyLogin().execute();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Sorry, details are not correct!", Toast.LENGTH_SHORT);
+                }
             }
         });
     }
 
-    /**
-     * Background Async Task to Create new product
-     */
+    public boolean onSubmitClicked(View v) {
+        String user = username.getText().toString();
+        String pass = password.getText().toString();
+
+        if (TextUtils.isEmpty(user) || user.length() < 1) {
+            username.setError("Please enter your username.");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(pass) || pass.length() < 1) {
+            password.setError("Please enter your password.");
+            return false;
+        }
+
+        return true;
+    }
+
+        /**
+         * Background Async Task to Create new product
+         */
     class VerifyLogin extends AsyncTask<String, String, String> {
 
         /**
@@ -126,8 +150,8 @@ public class LoginActivity extends ActionBarActivity {
 
                    //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
                     //successfully created product
-  //                  Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
-//                    startActivity(i);
+                    Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    startActivity(i);
                     //closing this screen
 // sending pid to next activity
                    //i.putExtra(TAG_PID, pid);

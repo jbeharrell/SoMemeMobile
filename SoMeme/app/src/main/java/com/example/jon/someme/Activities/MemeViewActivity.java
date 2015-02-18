@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.jon.someme.R;
 import com.example.jon.someme.models.MemeListData;
@@ -23,7 +24,7 @@ import java.net.URL;
 
 public class MemeViewActivity extends ActionBarActivity {
     MemeViewData data;
-
+    TextView title;
     Button share;
 
     @Override
@@ -31,7 +32,11 @@ public class MemeViewActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meme_view);
         String url = getIntent().getExtras().getString("url");
+        String tle = getIntent().getExtras().getString("title");
 
+        title=(TextView)findViewById(R.id.title);
+
+        title.setText(tle);
         // show The Image
         new DownloadImageTask((ImageView) findViewById(R.id.imageView))
                 .execute(url);
