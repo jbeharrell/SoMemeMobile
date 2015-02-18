@@ -1,5 +1,9 @@
 package com.example.jon.someme.models;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -36,6 +40,29 @@ public class MemeViewData {
         this.votes = votes;
         this.isUsers = isUsers;
         this.comments = comments;
+    }
+
+    public MemeViewData(JSONObject json) throws JSONException {
+        Log.i("jon", "MemeViewData json: " + json.toString());
+
+        currentUser = new CurrentUser(json.getJSONObject("thisUser"));
+        id = json.getInt("id");
+        title = json.getString("title");
+        content = json.getString("content");
+        sourceLink = json.getString("source_link");
+        timestamp = json.getString("timestamp");
+        views = json.getInt("views");
+        userViews = json.getInt("user_views");
+        downloads = json.getInt("downloads");
+        isUsers = json.getBoolean("isUsers");
+        owner = new OwnerUser(json.getJSONObject("user"));
+        votes = new Votes(json.getJSONObject("votes"));
+        JSONArray jsonComments = json.getJSONArray("comments");
+        comments = new ArrayList<Comment>();
+        for (int i = 0; i < jsonComments.length(); i++) {
+            Comment comment = new Comment(jsonComments.getJSONObject(i));
+            comments.add(comment);
+        }
     }
 
     public CurrentUser getCurrentUser() {

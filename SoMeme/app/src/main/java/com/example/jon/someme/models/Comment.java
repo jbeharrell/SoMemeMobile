@@ -1,5 +1,8 @@
 package com.example.jon.someme.models;
 
+import android.util.Log;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -28,6 +31,19 @@ public class Comment {
         this.isUsers = isUsers;
         this.currentUser = currentUser;
         this.children = children;
+    }
+
+    public Comment(JSONObject json) throws JSONException {
+        Log.i("jon", "Comment json: " + json.toString());
+
+        id = json.getInt("id");
+        memeId = json.getInt("meme_id");
+        timestamp = json.getString("timestamp");
+        content = json.getString("content");
+        owner = new OwnerUser(json.getJSONObject("user"));
+        votes = new Votes(json.getJSONObject("votes"));
+        isUsers = json.getBoolean("isUsers");
+        currentUser = new CurrentUser(json.getJSONObject("thisUser"));
     }
 
     public int getId() {

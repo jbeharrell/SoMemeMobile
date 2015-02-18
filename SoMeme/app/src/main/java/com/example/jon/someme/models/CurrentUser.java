@@ -1,5 +1,8 @@
 package com.example.jon.someme.models;
 
+import android.util.Log;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -25,6 +28,24 @@ public class CurrentUser {
         hasVoted = true;
         this.vote = vote;
         this.favorited = favorited;
+    }
+
+    public CurrentUser(JSONObject json) throws JSONException {
+        Log.i("jon", "CurrentUser json: " + json.toString());
+
+        if(json.get("vote").equals(null)){
+            hasVoted = false;
+        }else{
+            hasVoted = true;
+            if(json.getInt("vote") == 1) {
+                vote = true;
+            }else{
+                vote = false;
+            }
+        }
+        if(json.has("favorite")){ // Belongs to meme
+            favorited = json.getBoolean("favorite");
+        }
     }
 
     public boolean isHasVoted() {
