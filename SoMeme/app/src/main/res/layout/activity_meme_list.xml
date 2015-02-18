@@ -11,4 +11,12 @@
         android:layout_height="match_parent"
         android:id="@+id/memeList"
         android:layout_centerHorizontal="true" />
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/username"-->
+        <!--android:text="USERNAME"-->
+        <!--android:layout_centerHorizontal="true" />-->
+
 </RelativeLayout>
