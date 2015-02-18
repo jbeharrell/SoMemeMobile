@@ -56,4 +56,10 @@
         android:layout_marginTop="10dip"
         android:text="View Profile"/>
 
+    <Button android:id="@+id/btnPlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:text="Watch Video"/>
+
 </LinearLayout>
