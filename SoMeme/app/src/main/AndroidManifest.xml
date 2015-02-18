@@ -26,6 +26,10 @@
             android:label="@string/title_activity_meme_view" >
         </activity>
         <activity
+            android:name=".activities.FavoriteActivity"
+            android:label="@string/title_activity_favorites_view" >
+        </activity>
+        <activity
             android:name=".activities.MemeListActivity"
             android:label="@string/title_activity_meme_list" >
         </activity>

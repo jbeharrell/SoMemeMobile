@@ -35,6 +35,7 @@ public class MemeViewActivity extends ActionBarActivity {
     private Button share;
     private EditText editText;
     private Button button;
+//    private String
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,7 @@ public class MemeViewActivity extends ActionBarActivity {
 
         title.setText(tle);
         // show The Image
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
-                .execute(url);
+        new DownloadImageTask((ImageView) findViewById(R.id.imageView)).execute(url);
         share = (Button) findViewById(R.id.share);
 
 
@@ -127,6 +127,10 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     public void setModel(MemeViewData data){
         this.data = data;
 
+        //data we need
+        //meme id, meme title, meme description*, meme votes, meme owner*, meme url
+
+
         title = (TextView) findViewById(R.id.title);
         //imageView = (ImageView) findViewById(R.id.imageView);
         like = (Button) findViewById(R.id.like);
@@ -138,6 +142,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         button = (Button) findViewById(R.id.button);
 
         title.setText(data.getTitle());
+
         //TODO populate data
     }
 }

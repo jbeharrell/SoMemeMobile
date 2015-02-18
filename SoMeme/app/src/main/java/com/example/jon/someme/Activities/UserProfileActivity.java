@@ -1,9 +1,12 @@
 package com.example.jon.someme.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.jon.someme.R;
 import com.example.jon.someme.dataAccess.AsyncMemeListData;
@@ -13,13 +16,27 @@ import com.example.jon.someme.models.UserProfileData;
 
 public class UserProfileActivity extends ActionBarActivity {
     UserProfileData data;
+    Button btnFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        btnFavorites = (Button)findViewById(R.id.btnFavorites);
+
 
         new AsyncUserProfileData(this).execute();
+
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), FavoriteActivity.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 
 

@@ -44,6 +44,12 @@
         android:layout_marginTop="10dip"
         android:text="Meme List"/>
 
+    <Button android:id="@+id/btnFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:text="Favorites"/>
+
     <Button android:id="@+id/btnProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

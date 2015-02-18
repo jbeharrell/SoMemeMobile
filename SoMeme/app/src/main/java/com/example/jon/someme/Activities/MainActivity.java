@@ -18,6 +18,7 @@ public class MainActivity extends ActionBarActivity {
     Button btnProfile;
     Button btnRegister;
     Button btnMemeView;
+    Button btnFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
         btnMemeList = (Button) findViewById(R.id.btnMemeList);
         btnProfile = (Button) findViewById(R.id.btnProfile);
         btnMemeView = (Button)findViewById(R.id.btnMemeView);
+        btnFavorites=(Button)findViewById(R.id.btnFavorites);
 
         //Listening to register new account link
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +57,16 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), MemeListActivity.class);
+                startActivity(i);
+            }
+        });
+
+        //Listening to register new account link
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), FavoriteActivity.class);
                 startActivity(i);
             }
         });
