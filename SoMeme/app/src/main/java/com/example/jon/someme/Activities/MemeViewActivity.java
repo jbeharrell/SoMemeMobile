@@ -6,8 +6,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.models.MemeListData;
+import com.example.jon.someme.models.MemeViewData;
 
 public class MemeViewActivity extends ActionBarActivity {
+    MemeViewData data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +41,10 @@ public class MemeViewActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setModel(MemeViewData data){
+        this.data = data;
+        // TODO: refresh activity
     }
 }

@@ -2,6 +2,7 @@ package com.example.jon.someme.models;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +45,14 @@ public class Comment {
         votes = new Votes(json.getJSONObject("votes"));
         isUsers = json.getBoolean("isUsers");
         currentUser = new CurrentUser(json.getJSONObject("thisUser"));
+        if(json.has("children")){
+            JSONArray jsonChildren = json.getJSONArray("children");
+            children = new ArrayList<Comment>();
+            for (int i = 0; i < jsonChildren.length(); i++) {
+                Comment comment = new Comment(jsonChildren.getJSONObject(i));
+                children.add(comment);
+            }
+        }
     }
 
     public int getId() {

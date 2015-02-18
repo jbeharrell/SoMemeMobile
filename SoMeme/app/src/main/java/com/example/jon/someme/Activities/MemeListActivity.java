@@ -8,10 +8,11 @@ import android.widget.ListView;
 
 import com.example.jon.someme.R;
 import com.example.jon.someme.dataAccess.AsyncMemeListData;
+import com.example.jon.someme.models.MemeListData;
 
 
 public class MemeListActivity extends ActionBarActivity {
-
+    private MemeListData data;
     private ListView memeListView;
 
     @Override
@@ -20,7 +21,7 @@ public class MemeListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_meme_list);
         memeListView = (ListView) findViewById(R.id.memeList);
 
-        new AsyncMemeListData().execute();
+        new AsyncMemeListData(this).execute();
         // Adaptor
     }
 
@@ -45,5 +46,10 @@ public class MemeListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setModel(MemeListData data){
+        this.data = data;
+        // TODO: refresh activity
     }
 }

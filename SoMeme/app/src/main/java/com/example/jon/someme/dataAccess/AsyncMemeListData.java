@@ -2,6 +2,7 @@ package com.example.jon.someme.dataAccess;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import com.example.jon.someme.activities.MemeListActivity;
 import com.example.jon.someme.models.MemeListData;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,7 +19,12 @@ import java.io.IOException;
  * Created by Jon on 2/13/2015.
  */
 public class AsyncMemeListData extends AsyncTask<Void, Void, JSONArray> {
-    private final String url = Constants.memeList;
+    private final String url = URLS.memeList;
+    private MemeListActivity activity;
+
+    public AsyncMemeListData(MemeListActivity activity){
+        this.activity = activity;
+    }
 
     protected JSONArray doInBackground(Void... v) {
         try {
@@ -45,14 +51,11 @@ public class AsyncMemeListData extends AsyncTask<Void, Void, JSONArray> {
 
     protected void onPostExecute(JSONArray json) {
         try {
-
             Log.i("jon", "main json: "+json.toString());
             MemeListData memeListData = new MemeListData(json);
-
-            // Render view
-
+            activity.setModel(memeListData);
         }catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("json", e.toString());
         }
     }
 

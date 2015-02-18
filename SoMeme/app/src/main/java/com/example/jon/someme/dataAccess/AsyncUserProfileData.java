@@ -3,8 +3,8 @@ package com.example.jon.someme.dataAccess;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.jon.someme.activities.MemeViewActivity;
-import com.example.jon.someme.models.MemeViewData;
+import com.example.jon.someme.activities.UserProfileActivity;
+import com.example.jon.someme.models.UserProfileData;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,11 +25,11 @@ import java.util.List;
 /**
  * Created by Jon on 2/13/2015.
  */
-public class AsyncMemeViewData extends AsyncTask<Void, Void, JSONObject> {
-    private final String url = URLS.memeView;
-    private MemeViewActivity activity;
+public class AsyncUserProfileData extends AsyncTask<Void, Void, JSONObject> {
+    private final String url = URLS.userProfile;
+    private UserProfileActivity activity;
 
-    public AsyncMemeViewData(MemeViewActivity activity){
+    public AsyncUserProfileData(UserProfileActivity activity){
         this.activity = activity;
     }
 
@@ -39,9 +39,8 @@ public class AsyncMemeViewData extends AsyncTask<Void, Void, JSONObject> {
             HttpPost post = new HttpPost(url);
 
             List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("user", "1"));
-            params.add(new BasicNameValuePair("meme", "1"));
-            params.add(new BasicNameValuePair("isView", "true"));
+            params.add(new BasicNameValuePair("user_id", "1"));
+            params.add(new BasicNameValuePair("currentUser", "1"));
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);
@@ -68,9 +67,9 @@ public class AsyncMemeViewData extends AsyncTask<Void, Void, JSONObject> {
     protected void onPostExecute(JSONObject json) {
         try {
             Log.i("jon", "main json: " + json.toString());
-            MemeViewData memeViewData = new MemeViewData(json);
+            UserProfileData userProfileData = new UserProfileData(json);
 
-            activity.setModel(memeViewData);
+            activity.setModel(userProfileData);
 
         }catch (JSONException e){
             Log.e("json", e.toString());
