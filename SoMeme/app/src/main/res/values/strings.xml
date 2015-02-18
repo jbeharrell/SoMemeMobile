@@ -16,4 +16,9 @@
         <item>Unspecified</item>
     </string-array>
 
+    <string name="profile">Profile</string>
+    <string name="favorites">Favorites</string>
+    <string name="logout">Logout</string>
+
+
 </resources>
