@@ -3,6 +3,7 @@ package com.example.jon.someme.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.jon.someme.R;
@@ -19,7 +21,7 @@ import java.net.URL;
 
 public class MemeViewActivity extends ActionBarActivity {
 
-    ImageView mIcon_val;
+    Button share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,21 @@ public class MemeViewActivity extends ActionBarActivity {
         // show The Image
         new DownloadImageTask((ImageView) findViewById(R.id.imageView))
                 .execute("http://i.imgur.com/Jzl5Xw7.png");
+        share = (Button) findViewById(R.id.share);
+
+
+//Listening to register new account link
+        share.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
+                startActivity(browserIntent);
+                // Switching to Register screen
+                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+                //startActivity(i);
+            }
+        });
     }
-
-
-
-
 
 
 
