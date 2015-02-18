@@ -40,9 +40,8 @@ public class Votes {
     }
 
     public void vote(OwnerUser user, boolean isPositive){
-        // TODO: Actually call the db stuff.  This is only for refreshing the view without requesting data again
 
-        if(true){ // TODO: check if current user has voted
+        if(true){ // check if current user has voted
             if(isPositive){
                 negative--;
             }else{
@@ -58,8 +57,6 @@ public class Votes {
 
     public JSONObject toJSON(){
         JSONObject json = new JSONObject();
-
-        // TODO: create json logic
 
         return json;
     }
