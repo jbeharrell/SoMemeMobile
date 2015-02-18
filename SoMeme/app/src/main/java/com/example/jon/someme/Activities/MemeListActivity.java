@@ -44,8 +44,6 @@ public class MemeListActivity extends ActionBarActivity {
 
     public void setModel(final MemeListData data) {
         this.data = data;
-        // TODO: refresh activity
-
         memeListView = (ListView) findViewById(R.id.memeList);
         MemeListArrayAdapter adapter = new MemeListArrayAdapter(this, data.getMemes());
         memeListView.setAdapter(adapter);

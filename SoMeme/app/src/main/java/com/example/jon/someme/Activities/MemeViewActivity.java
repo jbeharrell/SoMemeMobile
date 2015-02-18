@@ -135,5 +135,9 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         title.setText(data.getTitle());
         //TODO populate data
+
+        //TODO add onClick listeners to buttons to call proper Async classes (Need to make Async classes to send like/comment information to the server)
+
+        // TODO populate comments with CommentsArrayAdaptor
     }
 }

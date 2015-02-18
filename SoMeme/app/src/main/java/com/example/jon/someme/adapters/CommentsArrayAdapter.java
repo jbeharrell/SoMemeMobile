@@ -32,7 +32,7 @@ public class CommentsArrayAdapter extends ArrayAdapter<Comment> {
             row = inflater.inflate(R.layout.list_item_comment, parent, false);
         }
 
-
+        // TODO logic for ArrayAdaptor (check MemeListAdaptor) (Child comments are going to be fucked, don't worry about them now)
 
         return row;
     }
