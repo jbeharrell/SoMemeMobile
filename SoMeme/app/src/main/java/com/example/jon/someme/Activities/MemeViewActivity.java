@@ -23,11 +23,7 @@ import com.example.jon.someme.models.MemeViewData;
 import java.io.InputStream;
 
 public class MemeViewActivity extends ActionBarActivity {
-<<<<<<< HEAD
-    MemeViewData data;
-    TextView title;
-    Button share;
-=======
+
     private MemeViewData data;
 
     private TextView title;
@@ -39,7 +35,6 @@ public class MemeViewActivity extends ActionBarActivity {
     private Button share;
     private EditText editText;
     private Button button;
->>>>>>> efa17d47721b23cc11ac2070e2ac033fcffd50da
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
