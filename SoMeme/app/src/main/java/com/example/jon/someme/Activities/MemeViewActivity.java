@@ -24,6 +24,7 @@ import java.io.InputStream;
 
 public class MemeViewActivity extends ActionBarActivity {
     private MemeViewData data;
+    private int currentMemeId;
 
     private TextView title;
     private ImageView imageView;
@@ -39,7 +40,7 @@ public class MemeViewActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meme_view);
-        int memeId = getIntent().getExtras().getInt("meme");
+        currentMemeId = getIntent().getExtras().getInt("meme");
 
         // show The Image
 //        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
@@ -59,7 +60,7 @@ public class MemeViewActivity extends ActionBarActivity {
             }
         });
 
-        new AsyncMemeViewData(this).execute();
+        new AsyncMemeViewData(this).execute(currentMemeId+"");
     }
 
 

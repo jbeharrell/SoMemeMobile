@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by Jon on 2/13/2015.
  */
-public class AsyncMemeViewData extends AsyncTask<Void, Void, JSONObject> {
+public class AsyncMemeViewData extends AsyncTask<String, Void, MemeViewData> {
     private final String url = URLS.memeView;
     private MemeViewActivity activity;
 
@@ -33,24 +33,25 @@ public class AsyncMemeViewData extends AsyncTask<Void, Void, JSONObject> {
         this.activity = activity;
     }
 
-    protected JSONObject doInBackground(Void... v) {
+    protected MemeViewData doInBackground(String... memeId) {
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("user", "1"));
-            params.add(new BasicNameValuePair("meme", "1"));
+            params.add(new BasicNameValuePair("meme", memeId[0]));
             params.add(new BasicNameValuePair("isView", "true"));
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
 
-            String returnValue = EntityUtils.toString(entity);
-            Log.i("jon", returnValue);
+            JSONObject json = new JSONObject(EntityUtils.toString(entity));
+            Log.i("jon", "main json: " + json.toString());
+            MemeViewData data = new MemeViewData(json);
 
-            return new JSONObject(returnValue);
+            return data;
 
         } catch (ClientProtocolException e){
             e.printStackTrace();
@@ -59,22 +60,12 @@ public class AsyncMemeViewData extends AsyncTask<Void, Void, JSONObject> {
             e.printStackTrace();
             cancel(true);
         } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return new JSONObject();
-
-    }
-
-    protected void onPostExecute(JSONObject json) {
-        try {
-            Log.i("jon", "main json: " + json.toString());
-            MemeViewData memeViewData = new MemeViewData(json);
-
-            activity.setModel(memeViewData);
-
-        }catch (JSONException e){
             Log.e("json", e.toString());
         }
+        return null;
     }
 
+    protected void onPostExecute(MemeViewData data) {
+        activity.setModel(data);
+    }
 }
