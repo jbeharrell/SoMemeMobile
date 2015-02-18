@@ -10,15 +10,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.example.jon.someme.R;
+<<<<<<< HEAD
 import com.example.jon.someme.adapters.MemeListArrayAdapter;
 import com.example.jon.someme.models.StringTest;
 
 import java.util.ArrayList;
 import java.util.List;
+=======
+import com.example.jon.someme.dataAccess.AsyncMemeListData;
+import com.example.jon.someme.models.MemeListData;
+>>>>>>> 6bbe37fea81b80949d8cd6bcca04f3a287e5de0e
 
 
 public class MemeListActivity extends ActionBarActivity {
-
+    private MemeListData data;
     private ListView memeListView;
 
 //    @Override
@@ -31,6 +36,7 @@ public class MemeListActivity extends ActionBarActivity {
 //        // Adaptor
 //    }
 
+<<<<<<< HEAD
 
         ListView list;
         String[] web = {
@@ -97,6 +103,11 @@ public class MemeListActivity extends ActionBarActivity {
                 }
             });
         }
+=======
+        new AsyncMemeListData(this).execute();
+        // Adaptor
+    }
+>>>>>>> 6bbe37fea81b80949d8cd6bcca04f3a287e5de0e
 
 
     @Override
@@ -119,5 +130,10 @@ public class MemeListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setModel(MemeListData data){
+        this.data = data;
+        // TODO: refresh activity
     }
 }

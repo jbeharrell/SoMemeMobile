@@ -6,13 +6,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.dataAccess.AsyncMemeListData;
+import com.example.jon.someme.dataAccess.AsyncUserProfileData;
+import com.example.jon.someme.models.MemeViewData;
+import com.example.jon.someme.models.UserProfileData;
 
 public class UserProfileActivity extends ActionBarActivity {
+    UserProfileData data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        new AsyncUserProfileData(this).execute();
     }
 
 
@@ -36,5 +43,10 @@ public class UserProfileActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setModel(UserProfileData data){
+        this.data = data;
+        // TODO: refresh activity
     }
 }

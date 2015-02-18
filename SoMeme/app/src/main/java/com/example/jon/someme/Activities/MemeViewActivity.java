@@ -15,11 +15,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.models.MemeListData;
+import com.example.jon.someme.models.MemeViewData;
 
 import java.io.InputStream;
 import java.net.URL;
 
 public class MemeViewActivity extends ActionBarActivity {
+    MemeViewData data;
 
     Button share;
 
@@ -103,5 +106,10 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setModel(MemeViewData data){
+        this.data = data;
+        // TODO: refresh activity
     }
 }
