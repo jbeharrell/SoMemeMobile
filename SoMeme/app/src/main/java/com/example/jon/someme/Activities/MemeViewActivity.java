@@ -27,11 +27,14 @@ public class MemeViewActivity extends ActionBarActivity {
         setContentView(R.layout.activity_meme_view);
 
 
+<<<<<<< HEAD
         // show The Image
         new DownloadImageTask((ImageView) findViewById(R.id.imageView))
                 .execute("http://i.imgur.com/Jzl5Xw7.png");
 
 
+=======
+>>>>>>> 890cd57ad1dab611c53ad4c6ce9d3f59cdc322d7
     }
 
 

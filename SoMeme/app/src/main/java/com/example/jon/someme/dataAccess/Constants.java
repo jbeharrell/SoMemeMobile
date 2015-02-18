@@ -7,4 +7,5 @@ public class Constants {
     public static final String host = "192.168.0.12:80";
 
     public static final String memeList = "http://"+host+"/SoMeme/data/memeListData.php";
+    public static final String memeView = "http://"+host+"/SoMeme/data/memeViewData.php";
 }
