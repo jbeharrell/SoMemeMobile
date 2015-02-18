@@ -12,19 +12,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.jon.someme.R;
-import com.example.jon.someme.models.MemeListData;
+import com.example.jon.someme.dataAccess.AsyncMemeViewData;
 import com.example.jon.someme.models.MemeViewData;
 
 import java.io.InputStream;
-import java.net.URL;
 
 public class MemeViewActivity extends ActionBarActivity {
-    MemeViewData data;
+    private MemeViewData data;
 
-    Button share;
+    private TextView title;
+    private ImageView imageView;
+    private Button like;
+    private Button dislike;
+    private Button favorite;
+    private Button download;
+    private Button share;
+    private EditText editText;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +56,8 @@ public class MemeViewActivity extends ActionBarActivity {
                 //startActivity(i);
             }
         });
+
+        new AsyncMemeViewData(this).execute();
     }
 
 
@@ -108,6 +119,18 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     public void setModel(MemeViewData data){
         this.data = data;
-        // TODO: refresh activity
+
+        title = (TextView) findViewById(R.id.title);
+        //imageView = (ImageView) findViewById(R.id.imageView);
+        like = (Button) findViewById(R.id.like);
+        dislike = (Button) findViewById(R.id.dislike);
+        favorite = (Button) findViewById(R.id.favorite);
+        download = (Button) findViewById(R.id.download);
+        share = (Button) findViewById(R.id.share);
+        editText = (EditText) findViewById(R.id.editText);
+        button = (Button) findViewById(R.id.button);
+
+        title.setText(data.getTitle());
+        //TODO populate data
     }
 }

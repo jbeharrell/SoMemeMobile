@@ -35,13 +35,15 @@ public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
 
         TextView votePosView = (TextView) row.findViewById(R.id.vote_pos);
         TextView voteNegView = (TextView) row.findViewById(R.id.vote_neg);
-        //ImageView imageView = (ImageView) row.findViewById(R.id.image);
+        //ImageView imageView = (ImageView) row.findViewById(R.id.image); // TODO retrieve image widget from layout
         TextView usernameView = (TextView) row.findViewById(R.id.username);
         TextView timestampView = (TextView) row.findViewById(R.id.timestamp);
 
         votePosView.setText(memes.get(position).getVotes().getPositive());
         voteNegView.setText(memes.get(position).getVotes().getNegative());
-        //imageView.setImageURI(memes.get(position).getSourceLink());
+
+        //imageView.setImageURI(memes.get(position).getSourceLink()); TODO Populate the image
+
         usernameView.setText(memes.get(position).getOwner().getUsername());
         timestampView.setText(memes.get(position).getTimestamp());
 

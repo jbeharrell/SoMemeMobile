@@ -97,8 +97,6 @@ public class ListMeme {
     public JSONObject toJSON(){
         JSONObject json = new JSONObject();
 
-        // TODO: create json logic
-
         return json;
     }
 }
