@@ -27,34 +27,23 @@ import java.util.List;
 
 public class RegisterActivity extends ActionBarActivity{
 
-        // Progress Dialog
+        //Progress Dialog
         private ProgressDialog pDialog;
 
         JSONParser jsonParser = new JSONParser();
-        EditText username;
-        EditText password;
-        EditText email;
-        EditText fname;
-        EditText lname;
-        EditText birthDate;
+        EditText username, password, email, fname, lname, birthDate, country;
         Spinner gender;
-        EditText country;
-        Button register;
-        Button login;
+        Button register, login;
 
-        // url to create new product
+        //URL to create new account
         private static String url_login = "http://192.168.2.11:80/finalapp/data/createAccount.php";
 
-        // JSON Node names
+        //JSON Node names
         private static final String TAG_SUCCESS = "success";
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
-            //     super.onCreate(savedInstanceState);
-            //       setContentView(R.layout.add_product);
-
             super.onCreate(savedInstanceState);
-            // setting default screen to login.xml
             setContentView(R.layout.activity_register);
 
             register = (Button) findViewById(R.id.btnRegister);

@@ -1,24 +1,87 @@
 package com.example.jon.someme.activities;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.jon.someme.R;
 import com.example.jon.someme.models.MemeListData;
 import com.example.jon.someme.models.MemeViewData;
 
+import java.io.InputStream;
+import java.net.URL;
+
 public class MemeViewActivity extends ActionBarActivity {
     MemeViewData data;
+
+    Button share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meme_view);
+        // show The Image
+        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
+                .execute("http://i.imgur.com/Jzl5Xw7.png");
+        share = (Button) findViewById(R.id.share);
 
+
+//Listening to register new account link
+        share.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
+                startActivity(browserIntent);
+                // Switching to Register screen
+                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+                //startActivity(i);
+            }
+        });
+    }
+
+
+
+    public void onClick(View v) {
+//        startActivity(new Intent(this, IndexActivity.class));
+  //      finish();
 
     }
+
+private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    ImageView bmImage;
+
+    public DownloadImageTask(ImageView bmImage) {
+        this.bmImage = bmImage;
+    }
+
+    protected Bitmap doInBackground(String... urls) {
+        String urldisplay = urls[0];
+        Bitmap mIcon11 = null;
+        try {
+            InputStream in = new java.net.URL(urldisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return mIcon11;
+    }
+
+    protected void onPostExecute(Bitmap result) {
+        bmImage.setImageBitmap(result);
+    }
+}
+
 
 
     @Override

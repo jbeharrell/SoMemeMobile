@@ -126,8 +126,8 @@ public class LoginActivity extends ActionBarActivity {
 
                    //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
                     //successfully created product
-                    Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
-                    startActivity(i);
+  //                  Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+//                    startActivity(i);
                     //closing this screen
 // sending pid to next activity
                    //i.putExtra(TAG_PID, pid);
