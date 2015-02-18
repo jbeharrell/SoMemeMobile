@@ -32,6 +32,12 @@
         android:background="#000000"
         android:textColor="#9fff78"/>
 
+    <Button android:id="@+id/btnMemeView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:text="Meme View"/>
+
     <Button android:id="@+id/btnMemeList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -28,10 +28,9 @@
             android:textColor="#9fff78" />
 
         <ImageView
-            android:layout_width="200dip"
-            android:layout_height="200dip"
+            android:layout_width="400dip"
+            android:layout_height="400dip"
             android:id="@+id/imageView"
-            android:src="@drawable/johnkody"
             android:layout_alignParentStart="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
