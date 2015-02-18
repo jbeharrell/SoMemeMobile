@@ -9,10 +9,16 @@
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_favorites_view">FavoritesActivity</string>
     <string-array name="gender_array">
         <item>Male</item>
         <item>Female</item>
         <item>Unspecified</item>
     </string-array>
+
+    <string name="profile">Profile</string>
+    <string name="favorites">Favorites</string>
+    <string name="logout">Logout</string>
+
 
 </resources>

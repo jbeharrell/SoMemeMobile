@@ -1,12 +1,221 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#2a2a2a">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.jon.someme.activities.UserProfileActivity">
+    tools:context="com.example.jon.someme.activities.UserProfileActivity"
+    android:background="#2a2a2a">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="USERNAME"
+        android:id="@+id/textView"
+        android:layout_marginTop="20dp"
+        android:gravity="center|left"
+        android:textColor="#9fff78" />
 
-</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1"
+        android:layout_gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Date Joined:   "
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:textColor="#959595" />
+
+        <!-- Password Label -->
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="this would be user data"
+            android:layout_weight="0.2"
+            android:textColor="#959595"
+            android:id="@+id/txtJoinDate"
+            />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Only you can see the following information about yourself"
+        android:id="@+id/textView3"
+        android:textColor="#959595"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1"
+        android:layout_gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Email:   "
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:textColor="#959595" />
+
+        <!-- Password Label -->
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="this would be user data"
+            android:layout_weight="0.2"
+            android:textColor="#959595"
+            android:id="@+id/txtEmail"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1"
+        android:layout_gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Name:   "
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:textColor="#959595" />
+
+        <!-- Password Label -->
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="this would be user data"
+            android:layout_weight="0.2"
+            android:textColor="#959595"
+            android:id="@+id/txtName"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1"
+        android:layout_gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Date of Birth:   "
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:textColor="#959595" />
+
+        <!-- Password Label -->
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="this would be user data"
+            android:layout_weight="0.2"
+            android:textColor="#959595"
+            android:id="@+id/txtDOB"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1"
+        android:layout_gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Gender:   "
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:textColor="#959595" />
+
+        <!-- Password Label -->
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="this would be user data"
+            android:layout_weight="0.2"
+            android:textColor="#959595"
+            android:id="@+id/txtGender"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1"
+        android:layout_gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Country:   "
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:textColor="#959595" />
+
+        <!-- Password Label -->
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="this would be user data"
+            android:layout_weight="0.2"
+            android:textColor="#959595"
+            android:id="@+id/txtCountry"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:text="View Favorites"
+        android:id="@+id/btnFavorites"
+        android:layout_marginTop="20dp"
+        android:background="#9fff78" />
+</LinearLayout>
+</ScrollView>
