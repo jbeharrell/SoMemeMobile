@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by Jon on 2/13/2015.
  */
-public class AsyncUserProfileData extends AsyncTask<Void, Void, JSONObject> {
+public class AsyncUserProfileData extends AsyncTask<Void, Void, UserProfileData> {
     private final String url = URLS.userProfile;
     private UserProfileActivity activity;
 
@@ -33,7 +33,7 @@ public class AsyncUserProfileData extends AsyncTask<Void, Void, JSONObject> {
         this.activity = activity;
     }
 
-    protected JSONObject doInBackground(Void... v) {
+    protected UserProfileData doInBackground(Void... v) {
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
@@ -47,9 +47,11 @@ public class AsyncUserProfileData extends AsyncTask<Void, Void, JSONObject> {
             HttpEntity entity = response.getEntity();
 
             String returnValue = EntityUtils.toString(entity);
-            Log.i("jon", returnValue);
+            JSONObject json = new JSONObject(returnValue);
+            Log.i("jon", "main json: " + json.toString());
+            UserProfileData data = new UserProfileData(json);
 
-            return new JSONObject(returnValue);
+            return data;
 
         } catch (ClientProtocolException e){
             e.printStackTrace();
@@ -60,20 +62,12 @@ public class AsyncUserProfileData extends AsyncTask<Void, Void, JSONObject> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return new JSONObject();
+        return null;
 
     }
 
-    protected void onPostExecute(JSONObject json) {
-        try {
-            Log.i("jon", "main json: " + json.toString());
-            UserProfileData userProfileData = new UserProfileData(json);
-
-            activity.setModel(userProfileData);
-
-        }catch (JSONException e){
-            Log.e("json", e.toString());
-        }
+    protected void onPostExecute(UserProfileData data) {
+            activity.setModel(data);
     }
 
 }

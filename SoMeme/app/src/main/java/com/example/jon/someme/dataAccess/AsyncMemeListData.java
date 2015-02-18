@@ -13,12 +13,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 /**
  * Created by Jon on 2/13/2015.
  */
-public class AsyncMemeListData extends AsyncTask<Void, Void, JSONArray> {
+public class AsyncMemeListData extends AsyncTask<Void, Void, MemeListData> {
     private final String url = URLS.memeList;
     private MemeListActivity activity;
 
@@ -26,15 +28,19 @@ public class AsyncMemeListData extends AsyncTask<Void, Void, JSONArray> {
         this.activity = activity;
     }
 
-    protected JSONArray doInBackground(Void... v) {
+    protected MemeListData doInBackground(Void... v) {
         try {
 
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
+            JSONArray json = new JSONArray(EntityUtils.toString(entity));
 
-            return new JSONArray(EntityUtils.toString(entity));
+            Log.i("jon", "main json: "+json.toString());
+            MemeListData data = new MemeListData(json);
+
+            return data;
 
         } catch (ClientProtocolException e){
             e.printStackTrace();
@@ -43,20 +49,13 @@ public class AsyncMemeListData extends AsyncTask<Void, Void, JSONArray> {
             e.printStackTrace();
             cancel(true);
         } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return new JSONArray();
-
-    }
-
-    protected void onPostExecute(JSONArray json) {
-        try {
-            Log.i("jon", "main json: "+json.toString());
-            MemeListData memeListData = new MemeListData(json);
-            activity.setModel(memeListData);
-        }catch (JSONException e) {
             Log.e("json", e.toString());
         }
+        return null;
+    }
+
+    protected void onPostExecute(MemeListData data) {
+            activity.setModel(data);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.jon.someme.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,62 +22,62 @@ import java.util.List;
 /**
  * Created by Jon on 2/13/2015.
  */
-public class MemeListArrayAdapter extends ArrayAdapter<StringTest> {
+public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
     private Context context;
-    private ArrayList<StringTest> memes;
+    private ArrayList<ListMeme> memes;
 
-    public MemeListArrayAdapter(Context context, ArrayList<StringTest> memes) {
+    public MemeListArrayAdapter(Context context, ArrayList<ListMeme> memes) {
         super(context, R.layout.list_item_meme, memes);
         this.context = context;
         this.memes = memes;
     }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = new LinearLayout(getContext());
-            String inflater = Context.LAYOUT_INFLATER_SERVICE;
-            LayoutInflater vi = (LayoutInflater)getContext().getSystemService(inflater);
-            convertView = vi.inflate(R.layout.list_item_meme, parent, false);
-
-
-            // Product object
-            StringTest name = getItem(position);
-            //
-           TextView txtTitle = (TextView) convertView.findViewById(R.id.txt);
-            txtTitle.setText(name.getStr2());
-
-            // show image
-            ImageView img = (ImageView)convertView.findViewById(R.id.img);
-
-            // download image
-            ImageDownloader imageDownloader = new ImageDownloader();
-            imageDownloader.download(name.getStr(), img);
-
-            return convertView;
-        }
-    }
-
-
-//    @Override
-//    public View getView(int position, View row, ViewGroup parent) {
-//        if(row == null) {
-//            LayoutInflater inflater = (LayoutInflater) context
-//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            row = inflater.inflate(R.layout.list_item_meme, parent, false);
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            convertView = new LinearLayout(getContext());
+//            String inflater = Context.LAYOUT_INFLATER_SERVICE;
+//            LayoutInflater vi = (LayoutInflater)getContext().getSystemService(inflater);
+//            convertView = vi.inflate(R.layout.list_item_meme, parent, false);
+//
+//
+//            // Product object
+//            StringTest name = getItem(position);
+//            //
+//           TextView txtTitle = (TextView) convertView.findViewById(R.id.txt);
+//            txtTitle.setText(name.getStr2());
+//
+//            // show image
+//            ImageView img = (ImageView)convertView.findViewById(R.id.img);
+//
+//            // download image
+//            ImageDownloader imageDownloader = new ImageDownloader();
+//            imageDownloader.download(name.getStr(), img);
+//
+//            return convertView;
 //        }
-//
-//        TextView votePosView = (TextView) row.findViewById(R.id.vote_pos);
-//        TextView voteNegView = (TextView) row.findViewById(R.id.vote_neg);
-//        //ImageView imageView = (ImageView) row.findViewById(R.id.image);
-//        TextView usernameView = (TextView) row.findViewById(R.id.username);
-//        TextView timestampView = (TextView) row.findViewById(R.id.timestamp);
-//
-//        votePosView.setText(memes.get(position).getVotes().getPositive());
-//        voteNegView.setText(memes.get(position).getVotes().getNegative());
-//        //imageView.setImageURI(memes.get(position).getSourceLink());
-//        usernameView.setText(memes.get(position).getOwner().getUsername());
-//        timestampView.setText(memes.get(position).getTimestamp());
-//
-//        return row;
 //    }
-//}
+
+
+    @Override
+    public View getView(int position, View row, ViewGroup parent) {
+        if(row == null) {
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(R.layout.list_item_meme, parent, false);
+        }
+
+        TextView votePosView = (TextView) row.findViewById(R.id.vote_pos);
+        TextView voteNegView = (TextView) row.findViewById(R.id.vote_neg);
+        //ImageView imageView = (ImageView) row.findViewById(R.id.image);
+        TextView usernameView = (TextView) row.findViewById(R.id.username);
+        TextView timestampView = (TextView) row.findViewById(R.id.timestamp);
+
+        votePosView.setText(memes.get(position).getVotes().getPositive()+"");
+        voteNegView.setText(memes.get(position).getVotes().getNegative()+"");
+        //imageView.setImageURI(memes.get(position).getSourceLink());
+        usernameView.setText(memes.get(position).getOwner().getUsername()+"");
+        timestampView.setText(memes.get(position).getTimestamp()+"");
+
+        return row;
+    }
+}

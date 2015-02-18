@@ -39,11 +39,11 @@ public class MemeViewActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meme_view);
-        String url = getIntent().getExtras().getString("url");
+        int memeId = getIntent().getExtras().getInt("meme");
 
         // show The Image
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
-                .execute(url);
+//        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
+//                .execute(url);
         share = (Button) findViewById(R.id.share);
 
 
