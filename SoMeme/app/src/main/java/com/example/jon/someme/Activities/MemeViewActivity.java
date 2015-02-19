@@ -48,20 +48,7 @@ public class MemeViewActivity extends ActionBarActivity {
         // show The Image
 //        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
 //                .execute(url);
-        share = (Button) findViewById(R.id.share);
-
-
-//Listening to register new account link
-        share.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
-                startActivity(browserIntent);
-                // Switching to Register screen
-                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
-                //startActivity(i);
-            }
-        });
+       
 
         new AsyncMemeViewData(this).execute(currentMemeId+"");
     }
@@ -137,7 +124,25 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         editText = (EditText) findViewById(R.id.editText);
         button = (Button) findViewById(R.id.button);
 
+
+
         title.setText(data.getTitle());
+
+
+
+//Listening to register new account link
+        share.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
+                startActivity(browserIntent);
+                // Switching to Register screen
+                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+                //startActivity(i);
+            }
+        });
+
+
 
         new DownloadImageTask().execute(data.getSourceLink());
         //TODO populate data

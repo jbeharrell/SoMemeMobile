@@ -26,7 +26,9 @@ import java.util.List;
  * Created by Jon on 2/13/2015.
  */
 public class AsyncUserProfileData extends AsyncTask<Void, Void, UserProfileData> {
-    private final String url = URLS.userProfile;
+
+private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData.php";
+//    private final String url = URLS.userProfile;
     private UserProfileActivity activity;
 
     public AsyncUserProfileData(UserProfileActivity activity){
@@ -39,18 +41,39 @@ public class AsyncUserProfileData extends AsyncTask<Void, Void, UserProfileData>
             HttpPost post = new HttpPost(url);
 
             List<NameValuePair> params = new ArrayList<>();
+
+            //here we want the actual user id of the person we want to retrieve
+            //current user is doing the retrieving
+
+
             params.add(new BasicNameValuePair("user_id", "1"));
             params.add(new BasicNameValuePair("currentUser", "1"));
+
+
+            // defaultHttpClient
+//            DefaultHttpClient httpClient = new DefaultHttpClient();
+  //          HttpPost httpPost = new HttpPost(url);
+    //        httpPost.setEntity(new UrlEncodedFormEntity(params));
+
+           // HttpResponse httpResponse = httpClient.execute(httpPost);
+            //HttpEntity httpEntity = httpResponse.getEntity();
+            //is = httpEntity.getContent();
+
+
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
 
             String returnValue = EntityUtils.toString(entity);
+
+
+
+
             JSONObject json = new JSONObject(returnValue);
             Log.i("jon", "main json: " + json.toString());
             UserProfileData data = new UserProfileData(json);
-
+            Log.i("ian", "main json: " + data.getUsername());
             return data;
 
         } catch (ClientProtocolException e){

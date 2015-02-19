@@ -30,17 +30,17 @@ public class MainActivity extends ActionBarActivity {
         btnRegister = (Button) findViewById(R.id.link_to_register);
         btnMemeList = (Button) findViewById(R.id.btnMemeList);
         btnProfile = (Button) findViewById(R.id.btnProfile);
-        btnMemeView = (Button)findViewById(R.id.btnMemeView);
-        btnFavorites=(Button)findViewById(R.id.btnFavorites);
-        btnPlay =(Button)findViewById(R.id.btnPlay);
+        btnMemeView = (Button) findViewById(R.id.btnMemeView);
+        btnFavorites = (Button) findViewById(R.id.btnFavorites);
+        btnPlay = (Button) findViewById(R.id.btnPlay);
 
         //Listening to register new account link
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // Switching to Register screen
-                           Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                         startActivity(i);
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
             }
         });
 
@@ -95,20 +95,16 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-      //  Listening to register new account link
+        //  Listening to register new account link
         btnPlay.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(),VideoActivity.class);
+                Intent i = new Intent(getApplicationContext(), VideoActivity.class);
                 startActivity(i);
             }
         });
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,10 +112,10 @@ public class MainActivity extends ActionBarActivity {
 
         //check the user type here, if they are logged, give them the menu main
         //if the user is not logged in, give them the alternate menu
-        if(true == false) {
+        if (true == false) {
 
             getMenuInflater().inflate(R.menu.menu_main, menu);
-        }else{
+        } else {
 
             getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
         }
@@ -127,9 +123,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -151,7 +144,7 @@ public class MainActivity extends ActionBarActivity {
         super.onOptionsItemSelected(item);
 
         Intent i;
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
 
             case R.id.favorites:
                 i = new Intent(getApplicationContext(), FavoriteActivity.class);
@@ -173,7 +166,6 @@ public class MainActivity extends ActionBarActivity {
             case R.id.login:
                 //i = new Intent(getApplicationContext(), UserActivity.class);
                 //startActivity(i);
-
                 i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
                 //Toast.makeText(getBaseContext(), "You selected login", Toast.LENGTH_SHORT).show();
@@ -193,8 +185,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i);
                 break;
         }
+
         return true;
-
     }
-
 }

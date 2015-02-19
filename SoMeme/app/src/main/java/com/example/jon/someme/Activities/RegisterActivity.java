@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.dataAccess.URLS;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,9 +35,11 @@ public class RegisterActivity extends ActionBarActivity{
         EditText username, password, email, fname, lname, birthDate, country;
         Spinner gender;
         Button register, login;
+        boolean isRegisterSuccessful;
 
         //URL to create new account
-        private static String url_login = "http://192.168.2.11:80/finalapp/data/createAccount.php";
+        private static String url = "http://192.168.2.11:80/finalapp/data/createAccount.php";
+        //final private static String url  = URLS.register;
 
         //JSON Node names
         private static final String TAG_SUCCESS = "success";
@@ -201,7 +204,7 @@ public class RegisterActivity extends ActionBarActivity{
 
                 // getting JSON Object
                 // Note that create product url accepts POST method
-                JSONObject json = jsonParser.makeHttpRequest(url_login,"POST", params);
+                JSONObject json = jsonParser.makeHttpRequest(url,"POST", params);
 
                 //check log cat fro response
                 Log.d("Login", json.toString());
@@ -210,6 +213,7 @@ public class RegisterActivity extends ActionBarActivity{
                     int success = json.getInt(TAG_SUCCESS);
                     if (success == 1) {
 
+                        isRegisterSuccessful = true;
                         //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
                         //successfully created product
                         Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
@@ -221,6 +225,7 @@ public class RegisterActivity extends ActionBarActivity{
                         // starting new activity and expecting some response back
                         //startActivityForResult(in, 100);
                     } else {
+                        isRegisterSuccessful = false;
                         //failed to create product
                     }
                 } catch (JSONException e) {
@@ -237,6 +242,10 @@ public class RegisterActivity extends ActionBarActivity{
             protected void onPostExecute(String file_url) {
                 // dismiss the dialog once done
                 pDialog.dismiss();
+
+                if(isRegisterSuccessful == false){
+                    Toast.makeText(getApplicationContext(), "There was an error registering the account.", Toast.LENGTH_LONG).show();
+                }
             }
         }
     }

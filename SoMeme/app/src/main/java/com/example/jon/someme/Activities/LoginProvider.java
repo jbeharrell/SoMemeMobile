@@ -14,7 +14,15 @@ import android.net.Uri;
 
 import java.util.HashMap;
 
+/**
+ * This is the LoginProvider for the SoMeme application.
+ *
+ * @author: Ian Mori
+ * @since: 2015-02-17
+ */
 public class LoginProvider extends ContentProvider {
+
+    //Setting initial variables for queries and content provider
     static final String PROVIDER_NAME = "com.example.jon.someme.activities.LoginProvider";
     static final String URL = "content://" + PROVIDER_NAME + "/cte";
     static final Uri CONTENT_URI = Uri.parse(URL);
@@ -121,6 +129,9 @@ public class LoginProvider extends ContentProvider {
         return count;
     }
 
+    /**
+     * DatabaseHelper sets up the db on create or upgrade
+     */
     private static class DatabaseHelper extends SQLiteOpenHelper {
         DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);

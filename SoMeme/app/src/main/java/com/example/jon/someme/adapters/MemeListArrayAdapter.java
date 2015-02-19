@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.jon.someme.models.ListMeme;
 import com.example.jon.someme.R;
-import com.example.jon.someme.models.StringTest;
 
 import java.io.InputStream;
 import java.util.ArrayList;
