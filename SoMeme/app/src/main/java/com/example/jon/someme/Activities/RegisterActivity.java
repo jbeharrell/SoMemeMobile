@@ -178,14 +178,27 @@ public class RegisterActivity extends ActionBarActivity{
              * Creating account
              */
             protected String doInBackground(String... args) {
-                String user = username.getText().toString();
-                String pass = password.getText().toString();
-                String em = email.getText().toString();
-                String fn = fname.getText().toString();
-                String ln = lname.getText().toString();
-                String dob = birthDate.getText().toString();
-                String gen = gender.getSelectedItem().toString();
-                String cntry = country.getText().toString();
+                String user = username.getText().toString().trim();
+                String pass = password.getText().toString().trim();
+                String em = email.getText().toString().trim();
+                String fn = fname.getText().toString().trim();
+                String ln = lname.getText().toString().trim();
+                String dob = birthDate.getText().toString().trim();
+
+
+
+                String gen = String.valueOf(gender.getSelectedItem());
+
+                if(gen.startsWith("M"))
+                    gen = "1";
+                else
+                    gen="0";
+
+
+                String cntry = country.getText().toString().trim();
+
+
+
 
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();

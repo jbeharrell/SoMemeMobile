@@ -46,8 +46,11 @@ private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData
             //current user is doing the retrieving
 
 
-            params.add(new BasicNameValuePair("user_id", args[0]));
-            params.add(new BasicNameValuePair("currentUser", args[1]));
+            params.add(new BasicNameValuePair("user_id", String.valueOf(args[0])));
+            params.add(new BasicNameValuePair("currentUser", String.valueOf(args[1])));
+
+            Log.d("user id",args[0]);
+            Log.d("current user", args[1]);
 
 
             // defaultHttpClient

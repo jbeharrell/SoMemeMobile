@@ -58,5 +58,4 @@ public class AsyncMemeListData extends AsyncTask<Void, Void, MemeListData> {
     protected void onPostExecute(MemeListData data) {
             activity.setModel(data);
     }
-
 }

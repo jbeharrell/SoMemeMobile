@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
 
     private Button btnLogin,btnMemeList,btnProfile,btnRegister,btnMemeView,btnFavorites,btnPlay;
     private boolean isLoggedIn;
-    private int userID;
+    private int currentUserID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
-                i.putExtra("user_id", userID);
+                i.putExtra("currentUserID", currentUserID);
                 startActivity(i);
             }
         });
@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), MemeListActivity.class);
-                i.putExtra("user_id", userID);
+                i.putExtra("currentUserID", currentUserID);
                 startActivity(i);
             }
         });
@@ -72,7 +72,8 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
-                i.putExtra("user_id", userID);
+                i.putExtra("currentUserID", currentUserID);
+
                 startActivity(i);
             }
         });
@@ -83,8 +84,8 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
-                i.putExtra("user_id", userID);
-                i.putExtra("currentUser", "true");
+                i.putExtra("currentUserID", currentUserID);
+                i.putExtra("profileUserID", currentUserID);
                 startActivity(i);
             }
         });
@@ -127,7 +128,7 @@ String projection[] = {LoginProvider.user_id};
         Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,null);
 
         //gold
-        cur.moveToFirst();
+        cur.moveToLast();
 
 
         if(cur.getCount() >= 1){
@@ -135,13 +136,15 @@ String projection[] = {LoginProvider.user_id};
 
 
             String id = cur.getString(cur.getColumnIndex("user_id"));
-            userID = Integer.parseInt(id);
+            currentUserID = Integer.parseInt(id);
+
+            Log.d("user id", currentUserID+"");
 
             getMenuInflater().inflate(R.menu.menu_main, menu);
             cur.close();
 
         }else{
-            userID = 0;
+            currentUserID = 0;
             getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
         }
         //check the db, see if there is a record

@@ -64,7 +64,9 @@ public class MemeViewActivity extends ActionBarActivity {
     private JSONParser jsonParser = new JSONParser();
     private String content;
 
-    private int userID;
+    private String isFavorited;
+
+    private int currentUserID;
     //url to login
     //This will need to be changed to the local machine IP
     private static String url  = "http://192.168.2.11:80/finalapp/data/updateFavorite.php";
@@ -75,13 +77,14 @@ public class MemeViewActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meme_view);
         currentMemeId = getIntent().getExtras().getInt("meme");
+        isFavorited = getIntent().getExtras().getString("isFavorited");
 
         // show The Image
 //        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
 //                .execute(url);
        
-        userID = getIntent().getExtras().getInt("user_id");
-        new AsyncMemeViewData(this).execute(new String[]{currentMemeId+"", userID+""});
+        currentUserID = getIntent().getExtras().getInt("currentUserID");
+        new AsyncMemeViewData(this).execute(new String[]{currentMemeId+"", currentUserID+""});
     }
 
 
@@ -239,7 +242,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
          final Activity activity = this;
         submitComment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new AsyncComment(activity).execute(new String[]{userID+"", currentMemeId+"", commentText.getText().toString().trim()});
+                new AsyncComment(activity).execute(new String[]{currentUserID+"", currentMemeId+"", commentText.getText().toString().trim()});
                 commentText.setText("");
             }
         });
@@ -291,8 +294,8 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             //Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("meme", memeID));
-            params.add(new BasicNameValuePair("user",userID+""));
-            params.add(new BasicNameValuePair("current", current));
+            params.add(new BasicNameValuePair("user",currentUserID+""));
+            params.add(new BasicNameValuePair("current", isFavorited));
 
             //Getting the JSON Object
             //Sending POST parameters to the PHP page

@@ -135,6 +135,7 @@ public class LoginActivity extends ActionBarActivity {
             params.add(new BasicNameValuePair("password", pass));
             params.add(new BasicNameValuePair("mobile", "true"));
 
+            Log.d("asaaas",user);
             //Getting the JSON Object
             //Sending POST parameters to the PHP page
             JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);
@@ -153,8 +154,8 @@ public class LoginActivity extends ActionBarActivity {
                     values.put(LoginProvider.user_id, json.getString("id"));
                     Uri uri = getContentResolver().insert(LoginProvider.CONTENT_URI, values);
                     Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
-                    i.putExtra("user_id", json.getString("id"));
-                    i.putExtra("currentUser", "true");
+                    i.putExtra("currentUserID", json.getInt("id"));
+                    i.putExtra("profileID", json.getInt("id"));
                     startActivity(i);
                 } else {
                     isLoginSuccessful = false;

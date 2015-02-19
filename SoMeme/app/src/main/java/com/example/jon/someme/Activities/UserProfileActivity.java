@@ -18,16 +18,16 @@ public class UserProfileActivity extends ActionBarActivity {
     UserProfileData data;
     Button btnFavorites;
     TextView username, joinDate, name, email, dob, gender, country;
-    private int userID;
-    String currentUser;
+    private int currentUserID;
+    private int profileUserID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        userID = getIntent().getExtras().getInt("user_id");
-        currentUser = getIntent().getExtras().getString("currentUser");
-        new AsyncUserProfileData(this).execute(new String[]{userID+"", currentUser});
+        currentUserID = getIntent().getExtras().getInt("currentUserID");
+        profileUserID = getIntent().getExtras().getInt("profileUserID");
+        new AsyncUserProfileData(this).execute(new String[]{currentUserID+"", profileUserID+""});
 //        new AsyncUserProfileData(this).execute(userID);
     }
 
@@ -92,7 +92,8 @@ public class UserProfileActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
-                i.putExtra("user_id", userID);
+                i.putExtra("user_id", currentUserID);
+               // i.putExtra("currentUser",  );
                 startActivity(i);
             }
         });

@@ -16,13 +16,13 @@ import com.example.jon.someme.models.MemeListData;
 public class MemeListActivity extends ActionBarActivity {
     private MemeListData data;
     private ListView memeListView;
-    private int userID;
+    private int currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meme_list);
-        userID = getIntent().getExtras().getInt("user_id");
+        currentUserID = getIntent().getExtras().getInt("currentUserID");
 
         new AsyncMemeListData(this).execute();
     }
@@ -46,6 +46,7 @@ public class MemeListActivity extends ActionBarActivity {
 
     public void setModel(final MemeListData data) {
         this.data = data;
+
         memeListView = (ListView) findViewById(R.id.memeList);
         MemeListArrayAdapter adapter = new MemeListArrayAdapter(this, data.getMemes());
         memeListView.setAdapter(adapter);
@@ -56,7 +57,7 @@ public class MemeListActivity extends ActionBarActivity {
                                         int position, long id) {
                             Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
                             i.putExtra("meme", data.getMemes().get((int)id).getId());
-                            i.putExtra("user_id", userID);
+                            i.putExtra("currentUserID", currentUserID);
                             startActivity(i);
                 }
             });
