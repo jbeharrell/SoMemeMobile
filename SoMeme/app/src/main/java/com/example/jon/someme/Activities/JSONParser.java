@@ -1,5 +1,4 @@
 package com.example.jon.someme.activities;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +20,11 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+/**
+ * This is the LoginActivity for the SoMeme application.
+ *
+ * @since: 2015-02-12
+ */
 public class JSONParser {
 
     static InputStream is = null;
@@ -95,6 +99,5 @@ public class JSONParser {
 
         // return JSON String
         return jObj;
-
     }
 }

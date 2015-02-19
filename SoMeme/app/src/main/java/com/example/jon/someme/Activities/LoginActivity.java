@@ -34,11 +34,11 @@ public class LoginActivity extends ActionBarActivity {
     //Progress Dialog
     private ProgressDialog pDialog;
 
-    JSONParser jsonParser = new JSONParser();
-    EditText username;
-    EditText password;
-    Button login;
-    Button register;
+    private JSONParser jsonParser = new JSONParser();
+    private EditText username;
+    private EditText password;
+    private Button login;
+    private Button register;
     boolean isLoginSuccessful;
 
     //url to login
@@ -46,9 +46,6 @@ public class LoginActivity extends ActionBarActivity {
     private static String url  = "http://192.168.2.11:80/finalapp/data/authenticate.php";
 //    final private static String url  = URLS.authenticate;
 
-
-    //JSON Node names
-    private static final String TAG_SUCCESS = "success";
 
 
     @Override
@@ -129,8 +126,8 @@ public class LoginActivity extends ActionBarActivity {
          * Creating data to send to the server
          */
         protected String doInBackground(String... args) {
-            String user = username.getText().toString();
-            String pass = password.getText().toString();
+            String user = username.getText().toString().trim();
+            String pass = password.getText().toString().trim();
 
             //Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -147,15 +144,17 @@ public class LoginActivity extends ActionBarActivity {
 
             //Check if the login was successful from the return value of the request
             try {
-                int success = json.getInt(TAG_SUCCESS);
+                int success = json.getInt(URLS.TAG_SUCCESS);
                 if (success == 1) {
                     //User is logged in, storing the username to the local device db
                     //The LoginProvider content provider will allow the usernames to be accessed from another application
                     isLoginSuccessful = true;
                     ContentValues values = new ContentValues();
-                    values.put(LoginProvider.username, json.getString("username"));
+                    values.put(LoginProvider.user_id, json.getString("id"));
                     Uri uri = getContentResolver().insert(LoginProvider.CONTENT_URI, values);
                     Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    i.putExtra("user_id", json.getString("id"));
+                    i.putExtra("currentUser", "true");
                     startActivity(i);
                 } else {
                     isLoginSuccessful = false;

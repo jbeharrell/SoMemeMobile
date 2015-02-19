@@ -21,7 +21,8 @@ import java.io.IOException;
  * Created by Jon on 2/13/2015.
  */
 public class AsyncMemeListData extends AsyncTask<Void, Void, MemeListData> {
-    private final String url = URLS.memeList;
+    //private final String url = URLS.memeList;
+    private final String url = "http://192.168.2.11:80/finalapp/data/MemeListData.php";
     private MemeListActivity activity;
 
     public AsyncMemeListData(MemeListActivity activity){

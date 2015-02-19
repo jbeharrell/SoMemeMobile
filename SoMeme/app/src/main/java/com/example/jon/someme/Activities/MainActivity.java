@@ -1,8 +1,13 @@
 package com.example.jon.someme.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,14 +19,9 @@ import com.example.jon.someme.R;
 
 public class MainActivity extends ActionBarActivity {
 
-    Button btnLogin;
-    Button btnMemeList;
-    Button btnProfile;
-    Button btnRegister;
-    Button btnMemeView;
-    Button btnFavorites;
-    Button btnPlay;
-
+    private Button btnLogin,btnMemeList,btnProfile,btnRegister,btnMemeView,btnFavorites,btnPlay;
+    private boolean isLoggedIn;
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +69,8 @@ public class MainActivity extends ActionBarActivity {
 
             public void onClick(View v) {
                 // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), FavoriteActivity.class);
+                Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
+                i.putExtra("user_id", userID);
                 startActivity(i);
             }
         });
@@ -80,10 +81,11 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                i.putExtra("user_id", userID);
+                i.putExtra("currentUser", "true");
                 startActivity(i);
             }
         });
-
 
         //Listening to register new account link
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -104,21 +106,41 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i);
             }
         });
+
+
+        //get the user id if there is one and set it in the intent
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
-        //check the user type here, if they are logged, give them the menu main
-        //if the user is not logged in, give them the alternate menu
-        if (true == false) {
 
+//        Uri uri = getContentResolver().insert(LoginProvider.CONTENT_URI,);
+String projection[] = {LoginProvider.user_id};
+
+       // ContentValues values = new ContentValues();
+//        values.put(LoginProvider.user_id, json.getString("id"));
+        Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,null);
+
+        //gold
+        cur.moveToFirst();
+
+
+        if(cur.getCount() >= 1){
+            userID = cur.getString(cur.getColumnIndex("user_id"));
             getMenuInflater().inflate(R.menu.menu_main, menu);
-        } else {
+            cur.close();
 
+        }else{
+            userID = "";
             getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
         }
+        //check the db, see if there is a record
+
+        //check the user type here, if they are logged, give them the menu main
+        //if the user is not logged in, give them the alternate menu
 
         return super.onCreateOptionsMenu(menu);
 
@@ -147,7 +169,7 @@ public class MainActivity extends ActionBarActivity {
         switch (item.getItemId()) {
 
             case R.id.favorites:
-                i = new Intent(getApplicationContext(), FavoriteActivity.class);
+                i = new Intent(getApplicationContext(), FavoriteListActivity.class);
                 startActivity(i);
                 //Toast.makeText(getBaseContext(), "You selected favorites", Toast.LENGTH_SHORT).show();
                 break;

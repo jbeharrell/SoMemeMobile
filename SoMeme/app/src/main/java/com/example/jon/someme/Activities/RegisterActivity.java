@@ -31,18 +31,15 @@ public class RegisterActivity extends ActionBarActivity{
         //Progress Dialog
         private ProgressDialog pDialog;
 
-        JSONParser jsonParser = new JSONParser();
-        EditText username, password, email, fname, lname, birthDate, country;
-        Spinner gender;
-        Button register, login;
+        private JSONParser jsonParser = new JSONParser();
+        private EditText username, password, email, fname, lname, birthDate, country;
+        private Spinner gender;
+        private Button register, login;
         boolean isRegisterSuccessful;
 
         //URL to create new account
         private static String url = "http://192.168.2.11:80/finalapp/data/createAccount.php";
         //final private static String url  = URLS.register;
-
-        //JSON Node names
-        private static final String TAG_SUCCESS = "success";
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -113,13 +110,13 @@ public class RegisterActivity extends ActionBarActivity{
         }
 
     public boolean onSubmitClicked(View v) {
-        String user = username.getText().toString();
-        String pass = password.getText().toString();
-        String fn = fname.getText().toString();
-        String ln = lname.getText().toString();
-        String em = email.getText().toString();
-        String dob = birthDate.getText().toString();
-        String cntry = country.getText().toString();
+        String user = username.getText().toString().trim();
+        String pass = password.getText().toString().trim();
+        String fn = fname.getText().toString().trim();
+        String ln = lname.getText().toString().trim();
+        String em = email.getText().toString().trim();
+        String dob = birthDate.getText().toString().trim();
+        String cntry = country.getText().toString().trim();
 
         if(TextUtils.isEmpty(user) || user.length() < 4 || user.length() > 12) {
             username.setError("Username must be between 4 and 11 characters in length.");
@@ -210,13 +207,13 @@ public class RegisterActivity extends ActionBarActivity{
                 Log.d("Login", json.toString());
                 //      check for success tag
                 try {
-                    int success = json.getInt(TAG_SUCCESS);
+                    int success = json.getInt(URLS.TAG_SUCCESS);
                     if (success == 1) {
 
                         isRegisterSuccessful = true;
                         //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
                         //successfully created product
-                        Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         //closing this screen
 // sending pid to next activity

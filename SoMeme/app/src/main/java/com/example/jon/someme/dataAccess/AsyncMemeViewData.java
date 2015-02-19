@@ -26,7 +26,8 @@ import java.util.List;
  * Created by Jon on 2/13/2015.
  */
 public class AsyncMemeViewData extends AsyncTask<String, Void, MemeViewData> {
-    private final String url = URLS.memeView;
+    //private final String url = URLS.memeView;
+    private final String url = "http://192.168.2.11:80/finalapp/data/memeViewData.php";
     private MemeViewActivity activity;
 
     public AsyncMemeViewData(MemeViewActivity activity){
@@ -37,7 +38,7 @@ public class AsyncMemeViewData extends AsyncTask<String, Void, MemeViewData> {
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
-
+            //get the user id and possible meme id, unless that is already chosen below
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("user", "1"));
             params.add(new BasicNameValuePair("meme", memeId[0]));

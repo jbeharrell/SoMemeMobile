@@ -14,4 +14,6 @@ public class URLS {
     public static final String comment = "http://"+host+"/SoMeme/data/postComment.php";
     public static final String authenticate = "http://"+host+"SoMeme/data/authenticate.php";
     public static final String register = "http://"+host+"SoMeme/data/CreateAccount.php";
+    public static final String updateFavorite = "http://"+host+"SoMeme/data/updateFavorite.php";
+    public static final String TAG_SUCCESS = "success";
 }

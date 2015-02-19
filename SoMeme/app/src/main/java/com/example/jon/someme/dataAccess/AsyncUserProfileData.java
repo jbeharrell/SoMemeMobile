@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by Jon on 2/13/2015.
  */
-public class AsyncUserProfileData extends AsyncTask<Void, Void, UserProfileData> {
+public class AsyncUserProfileData extends AsyncTask<String, Void, UserProfileData> {
 
 private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData.php";
 //    private final String url = URLS.userProfile;
@@ -35,7 +35,7 @@ private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData
         this.activity = activity;
     }
 
-    protected UserProfileData doInBackground(Void... v) {
+    protected UserProfileData doInBackground(String... args) {
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
@@ -46,8 +46,8 @@ private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData
             //current user is doing the retrieving
 
 
-            params.add(new BasicNameValuePair("user_id", "1"));
-            params.add(new BasicNameValuePair("currentUser", "1"));
+            params.add(new BasicNameValuePair("user_id", args[0]));
+            params.add(new BasicNameValuePair("currentUser", args[1]));
 
 
             // defaultHttpClient
@@ -73,7 +73,7 @@ private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData
             JSONObject json = new JSONObject(returnValue);
             Log.i("jon", "main json: " + json.toString());
             UserProfileData data = new UserProfileData(json);
-            Log.i("ian", "main json: " + data.getUsername());
+//            Log.i("ian", "main json: " + data.getUsername());
             return data;
 
         } catch (ClientProtocolException e){

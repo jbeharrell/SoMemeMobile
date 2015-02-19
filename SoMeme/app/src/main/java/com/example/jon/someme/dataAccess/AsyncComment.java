@@ -21,7 +21,8 @@ import java.util.List;
  * Created by Jon on 2/13/2015.
  */
 public class AsyncComment extends AsyncTask<String, Void, String> {
-    private final String url = URLS.comment;
+//    private final String url = URLS.comment;
+  private final String url = "http://192.168.2.11:80/finalapp/data/PostComment.php";
     private Activity activity;
 
     public AsyncComment(Activity activity){
@@ -30,13 +31,14 @@ public class AsyncComment extends AsyncTask<String, Void, String> {
 
     protected String doInBackground(String... args) {
         try {
+            Log.i("jon", args[1]);
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
 
             List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("user", "1")); // TODO insert logged in user
-            params.add(new BasicNameValuePair("meme", args[0]));
-            params.add(new BasicNameValuePair("content", args[1]));
+            params.add(new BasicNameValuePair("user", args[0])); // TODO insert logged in user
+            params.add(new BasicNameValuePair("meme", args[1]));
+            params.add(new BasicNameValuePair("content", args[2]));
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);

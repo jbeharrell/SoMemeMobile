@@ -7,38 +7,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.jon.someme.R;
-import com.example.jon.someme.dataAccess.AsyncMemeListData;
+import com.example.jon.someme.dataAccess.AsyncComment;
 import com.example.jon.someme.dataAccess.AsyncUserProfileData;
-import com.example.jon.someme.models.MemeViewData;
 import com.example.jon.someme.models.UserProfileData;
 
 public class UserProfileActivity extends ActionBarActivity {
     UserProfileData data;
     Button btnFavorites;
-
+    TextView username, joinDate, name, email, dob, gender, country;
+    String userID;
+    String currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        btnFavorites = (Button)findViewById(R.id.btnFavorites);
 
-
-        new AsyncUserProfileData(this).execute();
-
-        btnFavorites.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), FavoriteActivity.class);
-                startActivity(i);
-            }
-        });
-
-
+        userID = getIntent().getExtras().getString("user_id");
+        currentUser = getIntent().getExtras().getString("currentUser");
+        new AsyncUserProfileData(this).execute(new String[]{userID, currentUser});
+//        new AsyncUserProfileData(this).execute(userID);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,6 +55,48 @@ public class UserProfileActivity extends ActionBarActivity {
 
     public void setModel(UserProfileData data){
         this.data = data;
+
+
+        btnFavorites = (Button)findViewById(R.id.btnFavorites);
+        country = (TextView)findViewById(R.id.txtCountry);
+        username = (TextView)findViewById(R.id.txtUsername);
+        name = (TextView)findViewById(R.id.txtName);
+        email = (TextView)findViewById(R.id.txtEmail);
+        dob = (TextView)findViewById(R.id.txtDOB);
+        joinDate = (TextView)findViewById(R.id.txtJoinDate);
+        gender = (TextView)findViewById(R.id.txtGender);
+
+        boolean gen = data.isGender();
+        if (!gen)
+            gender.setText("Male");
+        else
+            gender.setText("Female");
+
+        country.setText(data.getCountry());
+        username.setText(data.getUsername());
+        name.setText(data.getFirstName());
+        email.setText(data.getEmail());
+        dob.setText(data.getDob());
+        joinDate.setText(data.getDateJoined());
+
+//        AsyncUserProfileData profileData = new AsyncUserProfileData(this);
+//        //AsyncUserProfileData(UserProfileActivity activity)
+//
+//        profileData.
+//        MemeListArrayAdapter adapter = new MemeListArrayAdapter(this, data.getMemes());
+//        memeListView.setAdapter(adapter);
+
+
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
+                i.putExtra("user_id", userID);
+                startActivity(i);
+            }
+        });
+
         // TODO: refresh activity
     }
 }

@@ -1,6 +1,10 @@
 package com.example.jon.someme.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,15 +23,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jon.someme.R;
 import com.example.jon.someme.adapters.CommentsArrayAdapter;
 import com.example.jon.someme.dataAccess.AsyncComment;
 import com.example.jon.someme.dataAccess.AsyncMemeViewData;
 import com.example.jon.someme.dataAccess.AsyncVote;
+import com.example.jon.someme.dataAccess.URLS;
 import com.example.jon.someme.models.MemeViewData;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.StringBufferInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemeViewActivity extends ActionBarActivity {
     private MemeViewData data;
@@ -42,7 +59,17 @@ public class MemeViewActivity extends ActionBarActivity {
     private EditText commentText;
     private Button submitComment;
     private LinearLayout comments;
+    private boolean isUpdateSuccessful;
+    private boolean isPostSuccessful;
+    private JSONParser jsonParser = new JSONParser();
+    private String content;
 
+    private String userID;
+    //url to login
+    //This will need to be changed to the local machine IP
+    private static String url  = "http://192.168.2.11:80/finalapp/data/updateFavorite.php";
+    //private static String url = "http://192.168.2.11:80/finalapp/data/postComment.php";
+    //    final private static String url  = URLS.updateFavorite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +80,8 @@ public class MemeViewActivity extends ActionBarActivity {
 //        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
 //                .execute(url);
        
-
-        new AsyncMemeViewData(this).execute(currentMemeId+"");
+        userID = getIntent().getExtras().getString("user_id");
+        new AsyncMemeViewData(this).execute(new String[]{currentMemeId+"", userID});
     }
 
 
@@ -115,7 +142,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setModel(MemeViewData data){
+    public void setModel(final MemeViewData data){
         this.data = data;
 
         title = (TextView) findViewById(R.id.title);
@@ -147,6 +174,64 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             }
         });
 
+        download.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                imageView.buildDrawingCache();
+                Bitmap bmap = imageView.getDrawingCache();
+
+                saveToInternalSorage(bmap);
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
+//                startActivity(browserIntent);
+//                // Switching to Register screen
+//                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+//                //startActivity(i);
+            }
+        });
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+//                        getMemes().get((int)id).getId();
+                new UpdateFavorite().execute();
+                //favorite in the php db with these ids
+
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
+                //              startActivity(browserIntent);
+                // Switching to Register screen
+                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+                //startActivity(i);
+            }
+        });
+
+//        favorite.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+//
+//
+//                content = commentText.getText().toString().trim();
+//
+//                if (TextUtils.isEmpty(content) || content.length() < 1) {
+//                    commentText.setError("You must enter some content before posting.");
+//                }else{
+//
+////
+////
+////
+////
+////           getMemes().get((int)id).getId();
+//                new PostComment().execute();
+//                //favorite in the php db with these ids
+//
+////                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
+//                //              startActivity(browserIntent);
+//                // Switching to Register screen
+//                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+//                //startActivity(i);
+//            }
+//            }
+//        });
 
 
         new DownloadImageTask().execute(data.getSourceLink());
@@ -154,7 +239,8 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
          final Activity activity = this;
         submitComment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new AsyncComment(activity).execute(new String[]{currentMemeId+"", commentText.getText().toString()});
+                new AsyncComment(activity).execute(new String[]{userID, currentMemeId+"", commentText.getText().toString().trim()});
+                commentText.setText("");
             }
         });
         like.setOnClickListener(new View.OnClickListener() {
@@ -176,5 +262,164 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         }
     }
 
+
+
+    /**
+     * Background Async Task to verify the login
+     */
+    class UpdateFavorite extends AsyncTask<String, String, String> {
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        /**
+         * Creating data to send to the server
+         */
+        protected String doInBackground(String... args) {
+
+            //need meme id and user id
+            String memeID = Integer.toString(data.getId());
+//            String userID = Integer.toString(data.getOwner().getId());
+            String current = Boolean.toString(data.getCurrentUser().isFavorited());
+
+
+            //Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("meme", memeID));
+            params.add(new BasicNameValuePair("user",userID));
+            params.add(new BasicNameValuePair("current", current));
+
+            //Getting the JSON Object
+            //Sending POST parameters to the PHP page
+            JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);
+
+            //Log response
+            Log.d("Login", json.toString());
+
+            //Check if the login was successful from the return value of the request
+            try {
+                int success = json.getInt(URLS.TAG_SUCCESS);
+                if (success == 1) {
+                    //User is logged in, storing the username to the local device db
+                    //The LoginProvider content provider will allow the usernames to be accessed from another application
+                    isUpdateSuccessful = true;
+
+                } else {
+                    isUpdateSuccessful = false;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog.
+         */
+        protected void onPostExecute(String file_url) {
+
+            //Show an error message if there was an issue logging in.
+            if (isUpdateSuccessful == false) {
+                Toast.makeText(getApplicationContext(), "There was an error updating your favorites.", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getApplicationContext(), "Your favorites were updated successfully.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+//    /**
+//     * Background Async Task to verify the login
+//     */
+//    class PostComment extends AsyncTask<String, String, String> {
+//
+//        /**
+//         * Before starting background thread Show Progress Dialog
+//         */
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//
+//        /**
+//         * Creating data to send to the server
+//         */
+//        protected String doInBackground(String... args) {
+//
+//            //need meme id and user id
+//            String memeID = Integer.toString(data.getId());
+//            String userID = Integer.toString(data.getOwner().getId());
+////            String current = Boolean.toString(data.get);
+////use the user input
+//
+//            //Building Parameters
+//            List<NameValuePair> params = new ArrayList<NameValuePair>();
+//            params.add(new BasicNameValuePair("meme", memeID));
+//            params.add(new BasicNameValuePair("user","1"));
+//            params.add(new BasicNameValuePair("content", content));
+//
+//            //Getting the JSON Object
+//            //Sending POST parameters to the PHP page
+//            JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);
+//
+//            //Log response
+//            Log.d("Login", json.toString());
+//
+//            //Check if the login was successful from the return value of the request
+//            try {
+//                int success = json.getInt(URLS.TAG_SUCCESS);
+//                if (success == 1) {
+//                    //User is logged in, storing the username to the local device db
+//                    //The LoginProvider content provider will allow the usernames to be accessed from another application
+//                    isPostSuccessful = true;
+//                } else {
+//                    isPostSuccessful = false;
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return null;
+//        }
+//
+//        /**
+//         * After completing background task Dismiss the progress dialog.
+//         */
+//        protected void onPostExecute(String file_url) {
+//
+//            //Show an error message if there was an issue logging in.
+//            if (isPostSuccessful == false) {
+//                Toast.makeText(getApplicationContext(), "There was an error posting your comment.", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
+//
+
+
+    private String saveToInternalSorage(Bitmap bitmapImage){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("Memes", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,data.getTitle()+".jpg");
+
+        FileOutputStream fos = null;
+        try {
+
+            fos = new FileOutputStream(mypath);
+
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return directory.getAbsolutePath();
+    }
 
 }

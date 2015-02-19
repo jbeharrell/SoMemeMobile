@@ -34,7 +34,7 @@
             android:label="@string/title_activity_meme_view" >
         </activity>
         <activity
-            android:name=".activities.FavoriteActivity"
+            android:name=".activities.FavoriteListActivity"
             android:label="@string/title_activity_favorites_view" >
         </activity>
         <activity

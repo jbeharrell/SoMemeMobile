@@ -27,15 +27,17 @@ public class LoginProvider extends ContentProvider {
     static final String URL = "content://" + PROVIDER_NAME + "/cte";
     static final Uri CONTENT_URI = Uri.parse(URL);
     private SQLiteDatabase db;
-    static final String DATABASE_NAME = "someme";
+    static final String DATABASE_NAME = "someme_mobile";
     static final String TABLE_NAME = "users";
     static final int DATABASE_VERSION = 1;
     static final String CREATE_DB_TABLE = " CREATE TABLE " + TABLE_NAME
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + " username TEXT NOT NULL);";
+            + " user_id TEXT NOT NULL);";
+
+
 
     static final String id = "id";
-    static final String username = "username";
+    static final String user_id = "user_id";
     static final int uriCode = 1;
     static final UriMatcher uriMatcher;
     private static HashMap<String, String> values;
@@ -92,6 +94,9 @@ public class LoginProvider extends ContentProvider {
         return false;
     }
 
+
+
+
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
@@ -106,7 +111,7 @@ public class LoginProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
         if (sortOrder == null || sortOrder == "") {
-            sortOrder = username;
+            sortOrder = user_id;
         }
         Cursor c = qb.query(db, projection, selection, selectionArgs, null,
                 null, sortOrder);
@@ -129,6 +134,8 @@ public class LoginProvider extends ContentProvider {
         return count;
     }
 
+
+
     /**
      * DatabaseHelper sets up the db on create or upgrade
      */
@@ -139,7 +146,17 @@ public class LoginProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
+
+            //db.execSQL("DROP TABLE IF EXISTS users");
             db.execSQL(CREATE_DB_TABLE);
+        }
+
+        int getID(SQLiteDatabase db) {
+
+            Cursor cur= db.rawQuery("Select * from users", null);
+            int i= cur.getCount();
+            cur.close();
+            return i;
         }
 
         @Override
