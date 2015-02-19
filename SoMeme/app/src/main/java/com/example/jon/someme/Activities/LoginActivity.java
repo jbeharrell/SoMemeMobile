@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-import android.app.Activity;
+
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jon.someme.R;
+
 import org.json.JSONException;
 
 public class LoginActivity extends ActionBarActivity {
@@ -37,6 +40,7 @@ public class LoginActivity extends ActionBarActivity {
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
+    private static final String USERNAME = "username";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,9 @@ public class LoginActivity extends ActionBarActivity {
 
                 if(AreDetailsValid) {
                     new VerifyLogin().execute();
+
+
+
                 }else{
                     Toast.makeText(getApplicationContext(), "Sorry, details are not correct!", Toast.LENGTH_SHORT);
                 }
@@ -148,6 +155,11 @@ public class LoginActivity extends ActionBarActivity {
                 int success = json.getInt(TAG_SUCCESS);
                if (success == 1) {
 
+
+                   ContentValues values = new ContentValues();
+                   values.put(LoginProvider.username,json.getString("username"));
+                   Uri uri = getContentResolver().insert(LoginProvider.CONTENT_URI, values);
+                   //Toast.makeText(getBaseContext(), "New record inserted", Toast.LENGTH_LONG).show();
                    //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
                     //successfully created product
                     Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);

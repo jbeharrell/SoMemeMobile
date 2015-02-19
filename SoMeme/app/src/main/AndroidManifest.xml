@@ -13,6 +13,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <provider
+            android:name=".activities.LoginProvider"
+            android:authorities="com.example.jon.someme.activities.LoginProvider"
+            android:exported="true"
+            android:multiprocess="true" >
+        </provider>
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"

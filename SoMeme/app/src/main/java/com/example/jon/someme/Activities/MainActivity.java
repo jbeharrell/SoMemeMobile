@@ -113,8 +113,19 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        //check the user type here, if they are logged, give them the menu main
+        //if the user is not logged in, give them the alternate menu
+        if(true == false) {
+
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+        }else{
+
+            getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
+        }
+
         return super.onCreateOptionsMenu(menu);
+
     }
 
 
@@ -158,6 +169,28 @@ public class MainActivity extends ActionBarActivity {
                 //i = new Intent(getApplicationContext(), UserActivity.class);
                 //startActivity(i);
                 Toast.makeText(getBaseContext(), "You selected logout", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.login:
+                //i = new Intent(getApplicationContext(), UserActivity.class);
+                //startActivity(i);
+
+                i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                //Toast.makeText(getBaseContext(), "You selected login", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.register:
+                //i = new Intent(getApplicationContext(), UserActivity.class);
+                //startActivity(i);
+//                Toast.makeText(getBaseContext(), "You selected register", Toast.LENGTH_SHORT).show();
+                i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+                break;
+            case R.id.viewMemes:
+                //i = new Intent(getApplicationContext(), UserActivity.class);
+                //startActivity(i);
+                //Toast.makeText(getBaseContext(), "You selected view memes", Toast.LENGTH_SHORT).show();
+                i = new Intent(getApplicationContext(), MemeListActivity.class);
+                startActivity(i);
                 break;
         }
         return true;
