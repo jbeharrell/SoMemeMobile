@@ -9,4 +9,6 @@ public class URLS {
     public static final String memeList = "http://"+host+"/SoMeme/data/memeListData.php";
     public static final String memeView = "http://"+host+"/SoMeme/data/memeViewData.php";
     public static final String userProfile = "http://"+host+"/SoMeme/data/userProfileData.php";
+    public static final String vote = "http://"+host+"/SoMeme/data/vote.php";
+    public static final String comment = "http://"+host+"/SoMeme/data/postComment.php";
 }
