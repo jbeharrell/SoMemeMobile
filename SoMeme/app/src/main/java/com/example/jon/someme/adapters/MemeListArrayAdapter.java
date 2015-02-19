@@ -1,6 +1,9 @@
 package com.example.jon.someme.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import com.example.jon.someme.models.ListMeme;
 import com.example.jon.someme.R;
 import com.example.jon.someme.models.StringTest;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -25,6 +29,8 @@ import java.util.List;
 public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
     private Context context;
     private ArrayList<ListMeme> memes;
+    private int rowNum;
+    //private ImageView imageView = null;
 
     public MemeListArrayAdapter(Context context, ArrayList<ListMeme> memes) {
         super(context, R.layout.list_item_meme, memes);
@@ -72,12 +78,48 @@ public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
         TextView usernameView = (TextView) row.findViewById(R.id.username);
         TextView timestampView = (TextView) row.findViewById(R.id.timestamp);
 
+        ImageView imageView = (ImageView) row.findViewById(R.id.imageView);
+        new DownloadImageTask(imageView).execute(memes.get(position).getSourceLink());
+
+
         votePosView.setText(memes.get(position).getVotes().getPositive()+"");
         voteNegView.setText(memes.get(position).getVotes().getNegative()+"");
-        //imageView.setImageURI(memes.get(position).getSourceLink());
+
         usernameView.setText(memes.get(position).getOwner().getUsername()+"");
         timestampView.setText(memes.get(position).getTimestamp()+"");
 
         return row;
     }
+
+    //ADDED By Ryan on the 18th of February, 2015
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView image;
+        public DownloadImageTask() {
+
+        }
+
+        public DownloadImageTask(ImageView img){
+            image = img;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+
+        protected void onPostExecute(Bitmap result) {
+
+            image.setImageBitmap(result);
+        }
+    }
 }
+

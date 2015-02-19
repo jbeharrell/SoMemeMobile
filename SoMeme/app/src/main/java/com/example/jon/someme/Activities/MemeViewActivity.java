@@ -20,7 +20,10 @@ import com.example.jon.someme.R;
 import com.example.jon.someme.dataAccess.AsyncMemeViewData;
 import com.example.jon.someme.models.MemeViewData;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MemeViewActivity extends ActionBarActivity {
     private MemeViewData data;
@@ -71,11 +74,12 @@ public class MemeViewActivity extends ActionBarActivity {
 
     }
 
-private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
 
-    public DownloadImageTask(ImageView bmImage) {
-        this.bmImage = bmImage;
+    //The following was modified by Ryan on 2/18/2015
+private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+    public DownloadImageTask() {
+
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -92,7 +96,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
+        imageView.setImageBitmap(result);
     }
 }
 
@@ -124,7 +128,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         this.data = data;
 
         title = (TextView) findViewById(R.id.title);
-        //imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.imageView);
         like = (Button) findViewById(R.id.like);
         dislike = (Button) findViewById(R.id.dislike);
         favorite = (Button) findViewById(R.id.favorite);
@@ -134,10 +138,14 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         button = (Button) findViewById(R.id.button);
 
         title.setText(data.getTitle());
+
+        new DownloadImageTask().execute(data.getSourceLink());
         //TODO populate data
 
         //TODO add onClick listeners to buttons to call proper Async classes (Need to make Async classes to send like/comment information to the server)
 
         // TODO populate comments with CommentsArrayAdaptor
     }
+
+
 }
