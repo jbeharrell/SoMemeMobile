@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class FavoriteListActivity extends ActionBarActivity {
     private FavoritesData data;
     private ListView favorites;
-    private String userID;
+    private int userID;
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -55,10 +55,10 @@ public class FavoriteListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
 
-        userID = getIntent().getExtras().getString("user_id");
+        userID = getIntent().getExtras().getInt("user_id");
 
-Log.d("asd", userID);
-        new AsyncFavoritesData(this).execute(userID);
+Log.d("asd", userID+"");
+        new AsyncFavoritesData(this).execute(userID+"");
 
 
 //        memes = new ArrayList();
@@ -124,6 +124,7 @@ Log.d("asd", userID);
                                     int position, long id) {
                 Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
                 i.putExtra("meme", data.getMemes().get((int)id).getId());
+                i.putExtra("user_id", userID);
                 startActivity(i);
             }
         });

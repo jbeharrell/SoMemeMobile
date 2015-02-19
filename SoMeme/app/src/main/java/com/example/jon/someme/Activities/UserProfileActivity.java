@@ -18,16 +18,16 @@ public class UserProfileActivity extends ActionBarActivity {
     UserProfileData data;
     Button btnFavorites;
     TextView username, joinDate, name, email, dob, gender, country;
-    String userID;
+    private int userID;
     String currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        userID = getIntent().getExtras().getString("user_id");
+        userID = getIntent().getExtras().getInt("user_id");
         currentUser = getIntent().getExtras().getString("currentUser");
-        new AsyncUserProfileData(this).execute(new String[]{userID, currentUser});
+        new AsyncUserProfileData(this).execute(new String[]{userID+"", currentUser});
 //        new AsyncUserProfileData(this).execute(userID);
     }
 

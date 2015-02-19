@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
 
     private Button btnLogin,btnMemeList,btnProfile,btnRegister,btnMemeView,btnFavorites,btnPlay;
     private boolean isLoggedIn;
-    private String userID;
+    private int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+                i.putExtra("user_id", userID);
                 startActivity(i);
             }
         });
@@ -60,6 +61,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), MemeListActivity.class);
+                i.putExtra("user_id", userID);
                 startActivity(i);
             }
         });
@@ -129,12 +131,17 @@ String projection[] = {LoginProvider.user_id};
 
 
         if(cur.getCount() >= 1){
-            userID = cur.getString(cur.getColumnIndex("user_id"));
+
+
+
+            String id = cur.getString(cur.getColumnIndex("user_id"));
+            userID = Integer.parseInt(id);
+
             getMenuInflater().inflate(R.menu.menu_main, menu);
             cur.close();
 
         }else{
-            userID = "";
+            userID = 0;
             getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
         }
         //check the db, see if there is a record
