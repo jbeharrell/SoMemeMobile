@@ -27,6 +27,7 @@ public class AsyncVote extends AsyncTask<String, Void, String> {
     public AsyncVote(Activity activity){
         this.activity = activity;
     }
+    public AsyncVote(){}
 
     protected String doInBackground(String... args) {
         try {

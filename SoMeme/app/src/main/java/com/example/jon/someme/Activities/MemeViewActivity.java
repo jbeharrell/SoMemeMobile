@@ -15,9 +15,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.adapters.CommentsArrayAdapter;
 import com.example.jon.someme.dataAccess.AsyncComment;
 import com.example.jon.someme.dataAccess.AsyncMemeViewData;
 import com.example.jon.someme.dataAccess.AsyncVote;
@@ -38,6 +41,7 @@ public class MemeViewActivity extends ActionBarActivity {
     private Button share;
     private EditText commentText;
     private Button submitComment;
+    private LinearLayout comments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +140,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         share = (Button) findViewById(R.id.share);
         commentText = (EditText) findViewById(R.id.commentText);
         submitComment = (Button) findViewById(R.id.submitComment);
+        comments = (LinearLayout) findViewById(R.id.comments);
 
         title.setText(data.getTitle());
 
@@ -158,7 +163,12 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             }
         });
 
-        // TODO populate comments with CommentsArrayAdaptor
+        CommentsArrayAdapter adapter = new CommentsArrayAdapter(this, data.getComments());
+        final int adapterCount = adapter.getCount();
+        for (int i = 0; i < adapterCount; i++) {
+            View item = adapter.getView(i, null, null);
+            comments.addView(item);
+        }
     }
 
 
