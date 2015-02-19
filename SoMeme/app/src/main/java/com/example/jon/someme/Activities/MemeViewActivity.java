@@ -1,5 +1,6 @@
 package com.example.jon.someme.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,16 +15,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.adapters.CommentsArrayAdapter;
+import com.example.jon.someme.dataAccess.AsyncComment;
 import com.example.jon.someme.dataAccess.AsyncMemeViewData;
+import com.example.jon.someme.dataAccess.AsyncVote;
 import com.example.jon.someme.models.MemeViewData;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class MemeViewActivity extends ActionBarActivity {
     private MemeViewData data;
@@ -36,8 +39,9 @@ public class MemeViewActivity extends ActionBarActivity {
     private Button favorite;
     private Button download;
     private Button share;
-    private EditText editText;
-    private Button button;
+    private EditText commentText;
+    private Button submitComment;
+    private LinearLayout comments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +52,7 @@ public class MemeViewActivity extends ActionBarActivity {
         // show The Image
 //        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
 //                .execute(url);
-        share = (Button) findViewById(R.id.share);
-
-
-//Listening to register new account link
-        share.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
-                startActivity(browserIntent);
-                // Switching to Register screen
-                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
-                //startActivity(i);
-            }
-        });
+       
 
         new AsyncMemeViewData(this).execute(currentMemeId+"");
     }
@@ -112,7 +103,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up submitComment, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -134,17 +125,55 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         favorite = (Button) findViewById(R.id.favorite);
         download = (Button) findViewById(R.id.download);
         share = (Button) findViewById(R.id.share);
-        editText = (EditText) findViewById(R.id.editText);
-        button = (Button) findViewById(R.id.button);
+        commentText = (EditText) findViewById(R.id.commentText);
+        submitComment = (Button) findViewById(R.id.submitComment);
+        comments = (LinearLayout) findViewById(R.id.comments);
+
+
 
         title.setText(data.getTitle());
 
+
+
+//Listening to register new account link
+        share.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/home?status=Check out this meme I made at Someme.me!\""));
+                startActivity(browserIntent);
+                // Switching to Register screen
+                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+                //startActivity(i);
+            }
+        });
+
+
+
         new DownloadImageTask().execute(data.getSourceLink());
         //TODO populate data
+         final Activity activity = this;
+        submitComment.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncComment(activity).execute(new String[]{currentMemeId+"", commentText.getText().toString()});
+            }
+        });
+        like.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncVote(activity).execute(new String[]{"meme", currentMemeId+"", "1"});
+            }
+        });
+        dislike.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncVote(activity).execute(new String[]{"meme", currentMemeId+"", "0"});
+            }
+        });
 
-        //TODO add onClick listeners to buttons to call proper Async classes (Need to make Async classes to send like/comment information to the server)
-
-        // TODO populate comments with CommentsArrayAdaptor
+        CommentsArrayAdapter adapter = new CommentsArrayAdapter(this, data.getComments());
+        final int adapterCount = adapter.getCount();
+        for (int i = 0; i < adapterCount; i++) {
+            View item = adapter.getView(i, null, null);
+            comments.addView(item);
+        }
     }
 
 

@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.dataAccess.AsyncVote;
 import com.example.jon.someme.models.Comment;
 
 import java.util.ArrayList;
@@ -25,14 +28,31 @@ public class CommentsArrayAdapter extends ArrayAdapter<Comment> {
     }
 
     @Override
-    public View getView(int position, View row, ViewGroup parent) {
+    public View getView(final int position, View row, ViewGroup parent) {
         if(row == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.list_item_comment, parent, false);
         }
 
-        // TODO logic for ArrayAdaptor (check MemeListAdaptor) (Child comments are going to be fucked, don't worry about them now)
+        TextView like = (TextView) row.findViewById(R.id.like);
+        TextView dislike = (TextView) row.findViewById(R.id.dislike);
+        TextView username = (TextView) row.findViewById(R.id.username);
+        TextView content = (TextView) row.findViewById(R.id.content);
+
+        like.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncVote().execute(new String[]{"comment", comments.get(position).getId() + "", "1"});
+            }
+        });
+        dislike.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncVote().execute(new String[]{"comment", comments.get(position).getId() + "", "0"});
+            }
+        });
+
+        username.setText(comments.get(position).getOwner().getUsername()+"   "+comments.get(position).getTimestamp());
+        content.setText(comments.get(position).getContent().toString());
 
         return row;
     }

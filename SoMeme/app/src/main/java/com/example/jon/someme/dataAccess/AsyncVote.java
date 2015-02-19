@@ -20,13 +20,14 @@ import java.util.List;
 /**
  * Created by Jon on 2/13/2015.
  */
-public class AsyncComment extends AsyncTask<String, Void, String> {
-    private final String url = URLS.comment;
+public class AsyncVote extends AsyncTask<String, Void, String> {
+    private final String url = URLS.vote;
     private Activity activity;
 
-    public AsyncComment(Activity activity){
+    public AsyncVote(Activity activity){
         this.activity = activity;
     }
+    public AsyncVote(){}
 
     protected String doInBackground(String... args) {
         try {
@@ -35,15 +36,16 @@ public class AsyncComment extends AsyncTask<String, Void, String> {
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("user", "1")); // TODO insert logged in user
-            params.add(new BasicNameValuePair("meme", args[0]));
+            params.add(new BasicNameValuePair("type", args[0]));
             params.add(new BasicNameValuePair("content", args[1]));
+            params.add(new BasicNameValuePair("vote", args[2]));
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
 
             String responseString = EntityUtils.toString(entity);
-            Log.i("jon", "Comment response: "+responseString);
+            Log.i("jon", "Vote response: "+responseString);
             return responseString;
 
         } catch (ClientProtocolException e){

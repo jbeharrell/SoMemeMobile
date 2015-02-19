@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.jon.someme.models.ListMeme;
 import com.example.jon.someme.R;
-import com.example.jon.someme.models.StringTest;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -74,11 +73,10 @@ public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
 
         TextView votePosView = (TextView) row.findViewById(R.id.vote_pos);
         TextView voteNegView = (TextView) row.findViewById(R.id.vote_neg);
-        //ImageView imageView = (ImageView) row.findViewById(R.id.image);
         TextView usernameView = (TextView) row.findViewById(R.id.username);
         TextView timestampView = (TextView) row.findViewById(R.id.timestamp);
-
         ImageView imageView = (ImageView) row.findViewById(R.id.imageView);
+
         new DownloadImageTask(imageView).execute(memes.get(position).getSourceLink());
 
 

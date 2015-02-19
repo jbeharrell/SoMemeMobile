@@ -30,17 +30,17 @@ public class MainActivity extends ActionBarActivity {
         btnRegister = (Button) findViewById(R.id.link_to_register);
         btnMemeList = (Button) findViewById(R.id.btnMemeList);
         btnProfile = (Button) findViewById(R.id.btnProfile);
-        btnMemeView = (Button)findViewById(R.id.btnMemeView);
-        btnFavorites=(Button)findViewById(R.id.btnFavorites);
-        btnPlay =(Button)findViewById(R.id.btnPlay);
+        btnMemeView = (Button) findViewById(R.id.btnMemeView);
+        btnFavorites = (Button) findViewById(R.id.btnFavorites);
+        btnPlay = (Button) findViewById(R.id.btnPlay);
 
         //Listening to register new account link
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // Switching to Register screen
-                           Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                         startActivity(i);
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
             }
         });
 
@@ -95,30 +95,34 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-      //  Listening to register new account link
+        //  Listening to register new account link
         btnPlay.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(),VideoActivity.class);
+                Intent i = new Intent(getApplicationContext(), VideoActivity.class);
                 startActivity(i);
             }
         });
     }
 
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        //check the user type here, if they are logged, give them the menu main
+        //if the user is not logged in, give them the alternate menu
+        if (true == false) {
+
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+        } else {
+
+            getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
+        }
+
         return super.onCreateOptionsMenu(menu);
+
     }
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -140,7 +144,7 @@ public class MainActivity extends ActionBarActivity {
         super.onOptionsItemSelected(item);
 
         Intent i;
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
 
             case R.id.favorites:
                 i = new Intent(getApplicationContext(), FavoriteActivity.class);
@@ -159,9 +163,29 @@ public class MainActivity extends ActionBarActivity {
                 //startActivity(i);
                 Toast.makeText(getBaseContext(), "You selected logout", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.login:
+                //i = new Intent(getApplicationContext(), UserActivity.class);
+                //startActivity(i);
+                i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                //Toast.makeText(getBaseContext(), "You selected login", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.register:
+                //i = new Intent(getApplicationContext(), UserActivity.class);
+                //startActivity(i);
+//                Toast.makeText(getBaseContext(), "You selected register", Toast.LENGTH_SHORT).show();
+                i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+                break;
+            case R.id.viewMemes:
+                //i = new Intent(getApplicationContext(), UserActivity.class);
+                //startActivity(i);
+                //Toast.makeText(getBaseContext(), "You selected view memes", Toast.LENGTH_SHORT).show();
+                i = new Intent(getApplicationContext(), MemeListActivity.class);
+                startActivity(i);
+                break;
         }
+
         return true;
-
     }
-
 }

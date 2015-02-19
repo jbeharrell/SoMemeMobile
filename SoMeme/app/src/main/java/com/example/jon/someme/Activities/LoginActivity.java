@@ -1,13 +1,13 @@
 package com.example.jon.someme.activities;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -19,11 +19,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jon.someme.R;
+import com.example.jon.someme.dataAccess.URLS;
+
 import org.json.JSONException;
 
+/**
+ * This is the LoginActivity for the SoMeme application.
+ *
+ * @author: Ian Mori
+ * @since: 2015-02-12
+ */
 public class LoginActivity extends ActionBarActivity {
 
-    // Progress Dialog
+    //Progress Dialog
     private ProgressDialog pDialog;
 
     JSONParser jsonParser = new JSONParser();
@@ -31,63 +39,57 @@ public class LoginActivity extends ActionBarActivity {
     EditText password;
     Button login;
     Button register;
+    boolean isLoginSuccessful;
 
-    // url to create new product
-    private static String url_login = "http://192.168.2.11:80/finalapp/data/authenticate.php";
+    //url to login
+    //This will need to be changed to the local machine IP
+    private static String url  = "http://192.168.2.11:80/finalapp/data/authenticate.php";
+//    final private static String url  = URLS.authenticate;
 
-    // JSON Node names
+
+    //JSON Node names
     private static final String TAG_SUCCESS = "success";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-   //     super.onCreate(savedInstanceState);
- //       setContentView(R.layout.add_product);
-
         super.onCreate(savedInstanceState);
-        // setting default screen to login.xml
         setContentView(R.layout.activity_login);
 
         login = (Button) findViewById(R.id.btnLogin);
-        register = (Button)findViewById(R.id.btnRegister);
-//        TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
-
-        // Listening to register new account link
-        // Edit Text
-
-
+        register = (Button) findViewById(R.id.btnRegister);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-        //inputDesc = (TextView) findViewById(R.id.inputDesc);
 
-        // Create button
-//        Button btnCreateProduct = (Button) findViewById(R.id.login);
+        //Setting onclick listener for the register button
         register.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                // creating new product in background thread
+                //Will start the register activity
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
             }
         });
 
-        // button click event
+        //Setting onclick listener for the login button
         login.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
+                //Check if the user input was valid
                 boolean AreDetailsValid = onSubmitClicked(view);
-
-                if(AreDetailsValid) {
+                if (AreDetailsValid) {
                     new VerifyLogin().execute();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Sorry, details are not correct!", Toast.LENGTH_SHORT);
                 }
             }
         });
     }
 
+    /**
+     * This method will check the details entered by the user
+     */
     public boolean onSubmitClicked(View v) {
         String user = username.getText().toString();
         String pass = password.getText().toString();
@@ -105,9 +107,9 @@ public class LoginActivity extends ActionBarActivity {
         return true;
     }
 
-        /**
-         * Background Async Task to Create new product
-         */
+    /**
+     * Background Async Task to verify the login
+     */
     class VerifyLogin extends AsyncTask<String, String, String> {
 
         /**
@@ -124,44 +126,41 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         /**
-         * Creating product
+         * Creating data to send to the server
          */
         protected String doInBackground(String... args) {
             String user = username.getText().toString();
             String pass = password.getText().toString();
-//            String description = inputDesc.getText().toString();
 
-            // Building Parameters
+            //Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("username", user));
             params.add(new BasicNameValuePair("password", pass));
             params.add(new BasicNameValuePair("mobile", "true"));
 
-            // getting JSON Object
-            // Note that create product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_login,"POST", params);
+            //Getting the JSON Object
+            //Sending POST parameters to the PHP page
+            JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);
 
-            //check log cat fro response
+            //Log response
             Log.d("Login", json.toString());
-      //      check for success tag
+
+            //Check if the login was successful from the return value of the request
             try {
                 int success = json.getInt(TAG_SUCCESS);
-               if (success == 1) {
-
-                   //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT);
-                    //successfully created product
+                if (success == 1) {
+                    //User is logged in, storing the username to the local device db
+                    //The LoginProvider content provider will allow the usernames to be accessed from another application
+                    isLoginSuccessful = true;
+                    ContentValues values = new ContentValues();
+                    values.put(LoginProvider.username, json.getString("username"));
+                    Uri uri = getContentResolver().insert(LoginProvider.CONTENT_URI, values);
                     Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
                     startActivity(i);
-                    //closing this screen
-// sending pid to next activity
-                   //i.putExtra(TAG_PID, pid);
-
-                   // starting new activity and expecting some response back
-                   //startActivityForResult(in, 100);
                 } else {
-                    //failed to create product
+                    isLoginSuccessful = false;
                 }
-           } catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -169,12 +168,15 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         /**
-         * After completing background task Dismiss the progress dialog
-         * *
+         * After completing background task Dismiss the progress dialog.
          */
         protected void onPostExecute(String file_url) {
-            // dismiss the dialog once done
             pDialog.dismiss();
+
+            //Show an error message if there was an issue logging in.
+            if (isLoginSuccessful == false) {
+                Toast.makeText(getApplicationContext(), "There was an error logging in.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
