@@ -19,7 +19,7 @@ import com.example.jon.someme.R;
 
 public class MainActivity extends ActionBarActivity {
 
-    private Button btnLogin,btnMemeList,btnProfile,btnRegister,btnMemeView,btnFavorites,btnPlay;
+    private Button btnLogin,btnLogout,btnMemeList,btnProfile,btnRegister,btnFavorites,btnPlay;
     private boolean isLoggedIn;
     private int currentUserID;
     @Override
@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
         btnRegister = (Button) findViewById(R.id.link_to_register);
         btnMemeList = (Button) findViewById(R.id.btnMemeList);
         btnProfile = (Button) findViewById(R.id.btnProfile);
-        btnMemeView = (Button) findViewById(R.id.btnMemeView);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
         btnFavorites = (Button) findViewById(R.id.btnFavorites);
         btnPlay = (Button) findViewById(R.id.btnPlay);
 
@@ -45,15 +45,15 @@ public class MainActivity extends ActionBarActivity {
         });
 
         //Listening to register new account link
-        btnMemeView.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
-                i.putExtra("currentUserID", currentUserID);
-                startActivity(i);
-            }
-        });
+//        btnMemeView.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+//                // Switching to Register screen
+//                Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+//                i.putExtra("currentUserID", currentUserID);
+//                startActivity(i);
+//            }
+//        });
 
         //Listening to register new account link
         btnMemeList.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +73,8 @@ public class MainActivity extends ActionBarActivity {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
                 i.putExtra("currentUserID", currentUserID);
+
+                Log.d("user id ", currentUserID+"");
 
                 startActivity(i);
             }
@@ -125,7 +127,7 @@ String projection[] = {LoginProvider.user_id};
 
        // ContentValues values = new ContentValues();
 //        values.put(LoginProvider.user_id, json.getString("id"));
-        Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,LoginProvider.user_id + " ASC");
+        Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,LoginProvider.id + " DESC");
 
         //gold
         cur.moveToFirst();

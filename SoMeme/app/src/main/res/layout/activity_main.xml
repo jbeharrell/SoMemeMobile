@@ -34,12 +34,15 @@
         android:background="#ff363636"
         android:textColor="#9fff78"/>
 
-    <Button android:id="@+id/btnMemeView"
+    <Button android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Logout"
+        android:gravity="center"
+        android:textSize="20dip"
         android:layout_marginTop="10dip"
-        android:background="#ffb3b3b3"
-        android:text="Meme View"/>
+        android:background="#ff363636"
+        android:textColor="#9fff78"/>
 
     <Button android:id="@+id/btnMemeList"
         android:layout_width="match_parent"

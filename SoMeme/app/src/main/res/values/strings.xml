@@ -13,7 +13,6 @@
     <string-array name="gender_array">
         <item>Male</item>
         <item>Female</item>
-        <item>Unspecified</item>
     </string-array>
 
     <string name="profile">Profile</string>

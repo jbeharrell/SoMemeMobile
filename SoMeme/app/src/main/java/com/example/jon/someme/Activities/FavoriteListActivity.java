@@ -55,7 +55,7 @@ public class FavoriteListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
 
-        currentUserID = getIntent().getExtras().getInt("user_id");
+        currentUserID = getIntent().getExtras().getInt("currentUserID");
 
 Log.d("asd", currentUserID+"");
         new AsyncFavoritesData(this).execute(currentUserID+"");

@@ -189,10 +189,6 @@ public class RegisterActivity extends ActionBarActivity{
 
                 String gen = String.valueOf(gender.getSelectedItem());
 
-                if(gen.startsWith("M"))
-                    gen = "1";
-                else
-                    gen="0";
 
 
                 String cntry = country.getText().toString().trim();

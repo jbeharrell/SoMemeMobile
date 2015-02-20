@@ -283,7 +283,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         /**
          * Creating data to send to the server
          */
-        protected String doInBackground(String... args) {
+       protected String doInBackground(String... args) {
 
             //need meme id and user id
             String memeID = Integer.toString(data.getId());
@@ -295,8 +295,10 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("meme", memeID));
             params.add(new BasicNameValuePair("user",currentUserID+""));
-            params.add(new BasicNameValuePair("current", isFavorited));
+            params.add(new BasicNameValuePair("current", current));
 
+
+           Log.d("current",current);
             //Getting the JSON Object
             //Sending POST parameters to the PHP page
             JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);

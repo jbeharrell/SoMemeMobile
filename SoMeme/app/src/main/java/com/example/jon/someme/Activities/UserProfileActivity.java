@@ -97,7 +97,7 @@ public class UserProfileActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
-                i.putExtra("user_id", currentUserID);
+                i.putExtra("currentUserID", currentUserID);
                // i.putExtra("currentUser",  );
                 startActivity(i);
             }
