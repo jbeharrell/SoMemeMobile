@@ -84,7 +84,7 @@ public class MemeViewActivity extends ActionBarActivity {
 //                .execute(url);
        
         currentUserID = getIntent().getExtras().getInt("currentUserID");
-        new AsyncMemeViewData(this).execute(new String[]{currentMemeId+"", currentUserID+""});
+        new AsyncMemeViewData(this).execute(new String[]{currentUserID+"",currentMemeId+""});
     }
 
 
@@ -244,6 +244,8 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             public void onClick(View v) {
                 new AsyncComment(activity).execute(new String[]{currentUserID+"", currentMemeId+"", commentText.getText().toString().trim()});
                 commentText.setText("");
+                finish();
+                startActivity(getIntent());
             }
         });
         like.setOnClickListener(new View.OnClickListener() {

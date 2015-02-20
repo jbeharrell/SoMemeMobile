@@ -42,7 +42,7 @@ public class AsyncFavoritesData extends AsyncTask<String, Void, FavoritesData> {
             HttpPost post = new HttpPost(url);
             //get the user id and possible meme id, unless that is already chosen below
             List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("user_id", "6"));
+            params.add(new BasicNameValuePair("user_id", args[0]));
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);

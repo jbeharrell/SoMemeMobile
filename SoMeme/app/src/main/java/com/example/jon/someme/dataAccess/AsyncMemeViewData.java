@@ -34,14 +34,14 @@ public class AsyncMemeViewData extends AsyncTask<String, Void, MemeViewData> {
         this.activity = activity;
     }
 
-    protected MemeViewData doInBackground(String... memeId) {
+    protected MemeViewData doInBackground(String... args) {
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
             //get the user id and possible meme id, unless that is already chosen below
             List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("user", "1"));
-            params.add(new BasicNameValuePair("meme", memeId[0]));
+            params.add(new BasicNameValuePair("user", args[0]));
+            params.add(new BasicNameValuePair("meme", args[1]));
             params.add(new BasicNameValuePair("isView", "true"));
 
             post.setEntity(new UrlEncodedFormEntity(params));
