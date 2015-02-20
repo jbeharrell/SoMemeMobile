@@ -20,7 +20,7 @@ public class UserProfileData {
     private String firstName;
     private String lastName;
     private String dob;
-    private boolean gender;
+    private String gender;
     private String country;
 
     public UserProfileData(int id, String username, String dateJoined, boolean isUsers, ArrayList<ListMeme> memes) {
@@ -31,7 +31,7 @@ public class UserProfileData {
         this.memes = memes;
     }
 
-    public UserProfileData(int id, String username, String dateJoined, String email, String firstName, String lastName, String dob, boolean gender, String country, boolean isUsers, ArrayList<ListMeme> memes) {
+    public UserProfileData(int id, String username, String dateJoined, String email, String firstName, String lastName, String dob, String gender, String country, boolean isUsers, ArrayList<ListMeme> memes) {
         this.id = id;
         this.username = username;
         this.dateJoined = dateJoined;
@@ -68,7 +68,7 @@ public class UserProfileData {
             if(!json.get("dob").equals(null))
                 dob = json.getString("dob");
             if(!json.get("gender").equals(null))
-                gender = json.getBoolean("gender");
+                gender = json.getString("gender");
             if(!json.get("country").equals(null))
                 country = json.getString("country");
         }
@@ -130,11 +130,11 @@ public class UserProfileData {
         this.dob = dob;
     }
 
-    public boolean isGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

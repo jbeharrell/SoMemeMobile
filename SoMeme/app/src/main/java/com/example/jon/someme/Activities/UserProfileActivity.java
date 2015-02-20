@@ -3,6 +3,7 @@ package com.example.jon.someme.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +26,12 @@ public class UserProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+
+
         currentUserID = getIntent().getExtras().getInt("currentUserID");
         profileUserID = getIntent().getExtras().getInt("profileUserID");
+
+        Log.d("userprofile id", profileUserID+"");
         new AsyncUserProfileData(this).execute(new String[]{currentUserID+"", profileUserID+""});
 //        new AsyncUserProfileData(this).execute(userID);
     }
@@ -66,8 +71,8 @@ public class UserProfileActivity extends ActionBarActivity {
         joinDate = (TextView)findViewById(R.id.txtJoinDate);
         gender = (TextView)findViewById(R.id.txtGender);
 
-        boolean gen = data.isGender();
-        if (!gen)
+        String gen = data.getGender();
+        if (gen.startsWith("M"))
             gender.setText("Male");
         else
             gender.setText("Female");

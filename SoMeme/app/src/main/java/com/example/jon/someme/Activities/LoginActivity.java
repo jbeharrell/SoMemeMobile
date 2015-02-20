@@ -155,7 +155,7 @@ public class LoginActivity extends ActionBarActivity {
                     Uri uri = getContentResolver().insert(LoginProvider.CONTENT_URI, values);
                     Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
                     i.putExtra("currentUserID", json.getInt("id"));
-                    i.putExtra("profileID", json.getInt("id"));
+                    i.putExtra("profileUserID", json.getInt("id"));
                     startActivity(i);
                 } else {
                     isLoginSuccessful = false;

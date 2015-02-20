@@ -125,16 +125,11 @@ String projection[] = {LoginProvider.user_id};
 
        // ContentValues values = new ContentValues();
 //        values.put(LoginProvider.user_id, json.getString("id"));
-        Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,null);
+        Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,LoginProvider.user_id + " ASC");
 
         //gold
-        cur.moveToLast();
-
-
+        cur.moveToFirst();
         if(cur.getCount() >= 1){
-
-
-
             String id = cur.getString(cur.getColumnIndex("user_id"));
             currentUserID = Integer.parseInt(id);
 
