@@ -295,7 +295,7 @@ private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("meme", memeID));
             params.add(new BasicNameValuePair("user",currentUserID+""));
-            params.add(new BasicNameValuePair("current", current));
+            params.add(new BasicNameValuePair("current", isFavorited));
 
 
            Log.d("current",current);

@@ -1,5 +1,6 @@
 package com.example.jon.someme.activities;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -45,15 +46,40 @@ public class MainActivity extends ActionBarActivity {
         });
 
         //Listening to register new account link
-//        btnMemeView.setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+
+               String where = "1=1";
+               int i = getContentResolver().delete(LoginProvider.CONTENT_URI,where,null);
+                currentUserID = 0;
+
+                //cr.delete(LoginProvider.CONTENT_URI, where, args );
+
+
+              //  Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,LoginProvider.id + " DESC");
+//                cur.moveToFirst();
+//                if(cur.getCount() >= 1){
+//                    String id = cur.getString(cur.getColumnIndex("user_id"));
+//                    currentUserID = Integer.parseInt(id);
 //
-//            public void onClick(View v) {
-//                // Switching to Register screen
-//                Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
-//                i.putExtra("currentUserID", currentUserID);
-//                startActivity(i);
-//            }
-//        });
+//                    Log.d("user id", currentUserID+"");
+//
+//                    getMenuInflater().inflate(R.menu.menu_main, menu);
+//                    cur.close();
+//
+//                }else{
+//                    currentUserID = 0;
+//                    getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
+//                }
+                Toast.makeText(getBaseContext(), "You have been logged out.", Toast.LENGTH_SHORT).show();
+                // Switching to Register screen
+                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
+                //i.putExtra("currentUserID", currentUserID);
+                //startActivity(i);
+            }
+        });
 
         //Listening to register new account link
         btnMemeList.setOnClickListener(new View.OnClickListener() {
