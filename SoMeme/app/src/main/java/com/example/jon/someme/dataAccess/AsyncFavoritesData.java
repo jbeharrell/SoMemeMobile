@@ -24,10 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jon on 2/13/2015.
+ * This is the AsyncFavoritesData class for the SoMeme application.
+ *
+ * This will actually query the php page.
+ *
+ * @author: Ian Mori
+ * @since: 2015-02-12
  */
 public class AsyncFavoritesData extends AsyncTask<String, Void, FavoritesData> {
-    //private final String url = URLS.memeList;
+    //private final String url = URLS.updateFavorite;
     private final String url = "http://192.168.2.11:80/finalapp/data/getFavorites.php";
     private FavoriteListActivity activity;
 
@@ -40,15 +45,17 @@ public class AsyncFavoritesData extends AsyncTask<String, Void, FavoritesData> {
             Log.d("asd", args[0]);
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
-            //get the user id and possible meme id, unless that is already chosen below
+
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("user_id", args[0]));
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
+
             JSONArray json = new JSONArray(EntityUtils.toString(entity));
             Log.i("jon", "main json: " + json.toString());
+
             FavoritesData data = new FavoritesData(json);
             return data;
 

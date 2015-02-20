@@ -35,7 +35,7 @@ public class AsyncVote extends AsyncTask<String, Void, String> {
             HttpPost post = new HttpPost(url);
 
             List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("user", "1")); // TODO insert logged in user
+            params.add(new BasicNameValuePair("user", "1"));
             params.add(new BasicNameValuePair("type", args[0]));
             params.add(new BasicNameValuePair("content", args[1]));
             params.add(new BasicNameValuePair("vote", args[2]));

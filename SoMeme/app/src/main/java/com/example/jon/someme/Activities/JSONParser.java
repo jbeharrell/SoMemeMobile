@@ -1,4 +1,5 @@
 package com.example.jon.someme.activities;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 /**
- * This is the LoginActivity for the SoMeme application.
+ * This is the JSONParser class used for sending requests to PHP
  *
  * @since: 2015-02-12
  */
@@ -43,9 +44,8 @@ public class JSONParser {
 
         // Making HTTP request
         try {
-
             // check for request method
-            if(method == "POST"){
+            if (method == "POST") {
                 // request method is POST
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -56,7 +56,7 @@ public class JSONParser {
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
 
-            }else if(method == "GET"){
+            } else if (method == "GET") {
                 // request method is GET
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, "utf-8");

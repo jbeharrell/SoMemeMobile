@@ -3,56 +3,33 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#2a2a2a">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:weightSum="1"
-    android:orientation="vertical"
-    android:background="#2a2a2a">
 
-    <VideoView
-        android:layout_width="549dp"
-        android:layout_height="513dp"
-        android:id="@+id/VideoView"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="8dp" />
-
-    <!-- Login button -->
-
-    <Button
-        android:id="@+id/play"
-        android:layout_width="558dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dip"
-        android:text="Play"
-        android:background="#9fff78"
-        android:textColor="@android:color/black"
-        android:layout_gravity="bottom" />
-    <!--&lt;!&ndash; Link to Registration Screen &ndash;&gt;-->
-    <!--<TextView android:id="@+id/username"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="40dip"-->
-        <!--android:layout_marginBottom="40dip"-->
-        <!--android:text="New to Twitter? Register here"-->
-        <!--android:gravity="center"-->
-        <!--android:textSize="20dip"-->
-        <!--android:textColor="#0b84aa"/>-->
+        android:background="#2a2a2a"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:weightSum="1">
 
-    <!--&lt;!&ndash; Link to Registration Screen &ndash;&gt;-->
-    <!--<TextView android:id="@+id/password"-->
-        <!--android:password="true"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="40dip"-->
-        <!--android:layout_marginBottom="40dip"-->
-        <!--android:text="New to Twitter? Register here"-->
-        <!--android:gravity="center"-->
-        <!--android:textSize="20dip"-->
-        <!--android:textColor="#0b84aa"/>-->
+        <VideoView
+            android:id="@+id/VideoView"
+            android:layout_width="549dp"
+            android:layout_height="513dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="30dp" />
 
-</LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/play"
+            android:layout_width="558dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dip"
+            android:background="#9fff78"
+            android:text="Play"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+</ScrollView>

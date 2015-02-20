@@ -17,6 +17,8 @@ import java.util.HashMap;
 /**
  * This is the LoginProvider for the SoMeme application.
  *
+ * This is the content provider and SQLite for the project.
+ *
  * @author: Ian Mori
  * @since: 2015-02-17
  */
@@ -33,9 +35,6 @@ public class LoginProvider extends ContentProvider {
     static final String CREATE_DB_TABLE = " CREATE TABLE " + TABLE_NAME
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + " user_id TEXT NOT NULL);";
-
-
-
     static final String id = "id";
     static final String user_id = "user_id";
     static final int uriCode = 1;
@@ -94,9 +93,6 @@ public class LoginProvider extends ContentProvider {
         return false;
     }
 
-
-
-
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
@@ -135,7 +131,6 @@ public class LoginProvider extends ContentProvider {
     }
 
 
-
     /**
      * DatabaseHelper sets up the db on create or upgrade
      */
@@ -146,17 +141,7 @@ public class LoginProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
-            //db.execSQL("DROP TABLE IF EXISTS users");
             db.execSQL(CREATE_DB_TABLE);
-        }
-
-        int getID(SQLiteDatabase db) {
-
-            Cursor cur= db.rawQuery("Select * from users", null);
-            int i= cur.getCount();
-            cur.close();
-            return i;
         }
 
         @Override

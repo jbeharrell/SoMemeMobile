@@ -18,6 +18,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,11 @@ import java.util.List;
  */
 public class AsyncUserProfileData extends AsyncTask<String, Void, UserProfileData> {
 
-private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData.php";
-//    private final String url = URLS.userProfile;
+    private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData.php";
+    //    private final String url = URLS.userProfile;
     private UserProfileActivity activity;
 
-    public AsyncUserProfileData(UserProfileActivity activity){
+    public AsyncUserProfileData(UserProfileActivity activity) {
         this.activity = activity;
     }
 
@@ -41,45 +42,21 @@ private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData
             HttpPost post = new HttpPost(url);
 
             List<NameValuePair> params = new ArrayList<>();
-
-            //here we want the actual user id of the person we want to retrieve
-            //current user is doing the retrieving
-
-
             params.add(new BasicNameValuePair("user_id", String.valueOf(args[0])));
             params.add(new BasicNameValuePair("currentUser", String.valueOf(args[1])));
-
-            Log.d("user id",args[0]);
-            Log.d("current user", args[1]);
-
-
-            // defaultHttpClient
-//            DefaultHttpClient httpClient = new DefaultHttpClient();
-  //          HttpPost httpPost = new HttpPost(url);
-    //        httpPost.setEntity(new UrlEncodedFormEntity(params));
-
-           // HttpResponse httpResponse = httpClient.execute(httpPost);
-            //HttpEntity httpEntity = httpResponse.getEntity();
-            //is = httpEntity.getContent();
-
-
 
             post.setEntity(new UrlEncodedFormEntity(params));
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
 
             String returnValue = EntityUtils.toString(entity);
-
-
-
-
             JSONObject json = new JSONObject(returnValue);
             Log.i("jon", "main json: " + json.toString());
+
             UserProfileData data = new UserProfileData(json);
-//            Log.i("ian", "main json: " + data.getUsername());
             return data;
 
-        } catch (ClientProtocolException e){
+        } catch (ClientProtocolException e) {
             e.printStackTrace();
             cancel(true);
         } catch (IOException e) {
@@ -93,7 +70,7 @@ private final String url = "http://192.168.2.11:80/finalapp/data/userProfileData
     }
 
     protected void onPostExecute(UserProfileData data) {
-            activity.setModel(data);
+        activity.setModel(data);
     }
 
 }

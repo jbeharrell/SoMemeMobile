@@ -1,9 +1,12 @@
 package com.example.jon.someme.activities;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -13,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,34 +29,32 @@ import org.json.JSONException;
 
 /**
  * This is the LoginActivity for the SoMeme application.
+ * <p/>
+ * This is the activity that will handle the user login
  *
  * @author: Ian Mori
  * @since: 2015-02-12
  */
 public class LoginActivity extends ActionBarActivity {
 
-    //Progress Dialog
+    //Initial variables and objects
     private ProgressDialog pDialog;
-
     private JSONParser jsonParser = new JSONParser();
     private EditText username;
     private EditText password;
     private Button login;
     private Button register;
-    boolean isLoginSuccessful;
+    private boolean isLoginSuccessful;
 
     //url to login
     //This will need to be changed to the local machine IP
-    private static String url  = "http://192.168.2.11:80/finalapp/data/authenticate.php";
-//    final private static String url  = URLS.authenticate;
-
-
+    private static String url = "http://192.168.2.11:80/finalapp/data/authenticate.php";
+    //final private static String url  = URLS.authenticate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         login = (Button) findViewById(R.id.btnLogin);
         register = (Button) findViewById(R.id.btnRegister);
         username = (EditText) findViewById(R.id.username);
@@ -82,6 +84,12 @@ public class LoginActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
+        return true;
     }
 
     /**
@@ -135,7 +143,6 @@ public class LoginActivity extends ActionBarActivity {
             params.add(new BasicNameValuePair("password", pass));
             params.add(new BasicNameValuePair("mobile", "true"));
 
-            Log.d("asaaas",user);
             //Getting the JSON Object
             //Sending POST parameters to the PHP page
             JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);

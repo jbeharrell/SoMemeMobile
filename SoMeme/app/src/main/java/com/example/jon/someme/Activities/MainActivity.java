@@ -1,11 +1,7 @@
 package com.example.jon.someme.activities;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,12 +13,18 @@ import android.widget.Toast;
 
 import com.example.jon.someme.R;
 
-
+/**
+ * This is the MainActivity for the SoMeme application.
+ *
+ * @author: Ian Mori
+ * @since: 2015-02-13
+ */
 public class MainActivity extends ActionBarActivity {
 
-    private Button btnLogin,btnLogout,btnMemeList,btnProfile,btnRegister,btnFavorites,btnPlay;
-    private boolean isLoggedIn;
+    //Creating initial objects and id variable
+    private Button btnLogin, btnLogout, btnMemeList, btnProfile, btnRegister, btnFavorites, btnPlay;
     private int currentUserID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,57 +37,38 @@ public class MainActivity extends ActionBarActivity {
         btnFavorites = (Button) findViewById(R.id.btnFavorites);
         btnPlay = (Button) findViewById(R.id.btnPlay);
 
-        //Listening to register new account link
+        //Listening for the user logging in
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(i);
+                if (currentUserID > 0) {
+                    Toast.makeText(getBaseContext(), "You must logout before signing in again.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Switching to Register screen
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    // i.putExtra("currentUserID", currentUserID);
+                    startActivity(i);
+                }
             }
         });
 
-        //Listening to register new account link
+        //Listening for logout
         btnLogout.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
-
-               String where = "1=1";
-               int i = getContentResolver().delete(LoginProvider.CONTENT_URI,where,null);
-                currentUserID = 0;
-
-                //cr.delete(LoginProvider.CONTENT_URI, where, args );
-
-
-              //  Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,LoginProvider.id + " DESC");
-//                cur.moveToFirst();
-//                if(cur.getCount() >= 1){
-//                    String id = cur.getString(cur.getColumnIndex("user_id"));
-//                    currentUserID = Integer.parseInt(id);
-//
-//                    Log.d("user id", currentUserID+"");
-//
-//                    getMenuInflater().inflate(R.menu.menu_main, menu);
-//                    cur.close();
-//
-//                }else{
-//                    currentUserID = 0;
-//                    getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
-//                }
-                Toast.makeText(getBaseContext(), "You have been logged out.", Toast.LENGTH_SHORT).show();
-                // Switching to Register screen
-                //Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
-                //i.putExtra("currentUserID", currentUserID);
-                //startActivity(i);
+                if (currentUserID > 0) {
+                    String where = "1=1";
+                    int i = getContentResolver().delete(LoginProvider.CONTENT_URI, where, null);
+                    currentUserID = 0;
+                    Toast.makeText(getBaseContext(), "You have been logged out.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        //Listening to register new account link
+        //Listening for the memelist
         btnMemeList.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), MemeListActivity.class);
                 i.putExtra("currentUserID", currentUserID);
                 startActivity(i);
@@ -96,147 +79,124 @@ public class MainActivity extends ActionBarActivity {
         btnFavorites.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
-                i.putExtra("currentUserID", currentUserID);
 
-                Log.d("user id ", currentUserID+"");
+                if (currentUserID > 0) {
+                    // Switching to Favorites screen
+                    Intent i = new Intent(getApplicationContext(), FavoriteListActivity.class);
+                    i.putExtra("currentUserID", currentUserID);
+                    Log.d("user id ", currentUserID + "");
+                    startActivity(i);
 
-                startActivity(i);
+                } else {
+                    Toast.makeText(getBaseContext(), "You must be logged in first to view favorites.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        //Listening to register new account link
+        //Listening for profile click
         btnProfile.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
-                i.putExtra("currentUserID", currentUserID);
-                i.putExtra("profileUserID", currentUserID);
-                startActivity(i);
+                if (currentUserID > 0) {
+                    Intent i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    i.putExtra("currentUserID", currentUserID);
+                    i.putExtra("profileUserID", currentUserID);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getBaseContext(), "You must be logged in first to view your profile.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        //Listening to register new account link
+        //Listening to register new account
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
             }
         });
 
-        //  Listening to register new account link
+        //Listening for play button
         btnPlay.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), VideoActivity.class);
                 startActivity(i);
             }
         });
-
-
-        //get the user id if there is one and set it in the intent
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //Creating a cursor object, this is used to query the database with the LoginProvider content uri
+        String projection[] = {LoginProvider.user_id};
+        Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI, projection, null, null, LoginProvider.id + " DESC");
 
-
-//        Uri uri = getContentResolver().insert(LoginProvider.CONTENT_URI,);
-String projection[] = {LoginProvider.user_id};
-
-       // ContentValues values = new ContentValues();
-//        values.put(LoginProvider.user_id, json.getString("id"));
-        Cursor cur = getContentResolver().query(LoginProvider.CONTENT_URI,projection,null,null,LoginProvider.id + " DESC");
-
-        //gold
+        //Move to the first record of the descending sorted list
         cur.moveToFirst();
-        if(cur.getCount() >= 1){
+        if (cur.getCount() >= 1) {
+            //Getting the user id, this will be used throughout to manage content and pages
             String id = cur.getString(cur.getColumnIndex("user_id"));
             currentUserID = Integer.parseInt(id);
-
-            Log.d("user id", currentUserID+"");
-
             getMenuInflater().inflate(R.menu.menu_main, menu);
             cur.close();
-
-        }else{
+        } else {
             currentUserID = 0;
             getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
         }
-        //check the db, see if there is a record
-
-        //check the user type here, if they are logged, give them the menu main
-        //if the user is not logged in, give them the alternate menu
 
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        super.onOptionsItemSelected(item);
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
         super.onOptionsItemSelected(item);
 
         Intent i;
+
+        //This switch will go through the overflow items, this is used twice throughout the project
+        //but could be used on every activity
         switch (item.getItemId()) {
-
             case R.id.favorites:
-                i = new Intent(getApplicationContext(), FavoriteListActivity.class);
-                startActivity(i);
-                //Toast.makeText(getBaseContext(), "You selected favorites", Toast.LENGTH_SHORT).show();
+                if (currentUserID > 0) {
+                    i = new Intent(getApplicationContext(), FavoriteListActivity.class);
+                    i.putExtra("currentUserID", currentUserID);
+                    Log.d("user id ", currentUserID + "");
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getBaseContext(), "You must be logged in first to view favorites.", Toast.LENGTH_SHORT).show();
+                }
                 break;
-
             case R.id.profile:
-                i = new Intent(getApplicationContext(), UserProfileActivity.class);
-                startActivity(i);
-                //Toast.makeText(getBaseContext(), "You selected profile", Toast.LENGTH_SHORT).show();
+                if (currentUserID > 0) {
+                    i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    i.putExtra("currentUserID", currentUserID);
+                    i.putExtra("profileUserID", currentUserID);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getBaseContext(), "You must be logged in first to view your profile.", Toast.LENGTH_SHORT).show();
+                }
                 break;
-
             case R.id.logout:
-                //i = new Intent(getApplicationContext(), UserActivity.class);
-                //startActivity(i);
-                Toast.makeText(getBaseContext(), "You selected logout", Toast.LENGTH_SHORT).show();
+                if (currentUserID > 0) {
+                    String where = "1=1";
+                    int x = getContentResolver().delete(LoginProvider.CONTENT_URI, where, null);
+                    currentUserID = 0;
+                    Toast.makeText(getBaseContext(), "You have been logged out.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.login:
-                //i = new Intent(getApplicationContext(), UserActivity.class);
-                //startActivity(i);
                 i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
-                //Toast.makeText(getBaseContext(), "You selected login", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.register:
-                //i = new Intent(getApplicationContext(), UserActivity.class);
-                //startActivity(i);
-//                Toast.makeText(getBaseContext(), "You selected register", Toast.LENGTH_SHORT).show();
                 i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
                 break;
             case R.id.viewMemes:
-                //i = new Intent(getApplicationContext(), UserActivity.class);
-                //startActivity(i);
-                //Toast.makeText(getBaseContext(), "You selected view memes", Toast.LENGTH_SHORT).show();
                 i = new Intent(getApplicationContext(), MemeListActivity.class);
+                i.putExtra("currentUserID", currentUserID);
                 startActivity(i);
                 break;
         }

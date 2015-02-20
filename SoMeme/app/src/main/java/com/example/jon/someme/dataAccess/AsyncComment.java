@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Jon on 2/13/2015.
  */
 public class AsyncComment extends AsyncTask<String, Void, String> {
-//    private final String url = URLS.comment;
+  //private final String url = URLS.comment;
   private final String url = "http://192.168.2.11:80/finalapp/data/PostComment.php";
     private Activity activity;
 

@@ -9,16 +9,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.example.jon.someme.R;
 import com.example.jon.someme.adapters.FavoritesArrayAdapter;
 import com.example.jon.someme.adapters.MemeListArrayAdapter;
 import com.example.jon.someme.dataAccess.AsyncFavoritesData;
 import com.example.jon.someme.models.FavoritesData;
 import com.example.jon.someme.models.MemeListData;
+
 import java.util.ArrayList;
 
 /**
  * This is the FavoriteActivity for the SoMeme application.
+ *
+ * This activity contains the content for the favorites list view
  *
  * @author: Ian Mori
  * @since: 2015-02-12
@@ -27,103 +32,97 @@ public class FavoriteListActivity extends ActionBarActivity {
     private FavoritesData data;
     private ListView favorites;
     private int currentUserID;
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_meme_list);
-//        memeListView = (ListView) findViewById(R.id.memeList);
-//
-
-//        // Adaptor
-//    }
-
-
-    ListView list;
-    String[] web = {
-            "Google Plus",
-            "Twitter",
-            "Windows",
-            "Bing",
-            "Itunes",
-            "Wordpress",
-            "Drupal"
-    };
-    ArrayList memes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
-
         currentUserID = getIntent().getExtras().getInt("currentUserID");
-
-Log.d("asd", currentUserID+"");
-        new AsyncFavoritesData(this).execute(currentUserID+"");
-
-
-//        memes = new ArrayList();
-//        memes.add(new StringTest("http://i.imgur.com/Jzl5Xw7.png", "a"));
-//        memes.add(new StringTest("http://i.imgur.com/7B6V5fg.png", "a"));
-//        memes.add(new StringTest("http://i.imgur.com/FvNvgii.gif", "a"));
-//        memes.add(new StringTest("http://i.imgur.com/nb4eyRe.jpg", "a"));
-//        memes.add(new StringTest("http://i.imgur.com/yvzDW9A.jpg", "a"));
-
-
+        new AsyncFavoritesData(this).execute(currentUserID + "");
     }
-    //new AsyncMemeListData(this).execute();
-    // Adaptor
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (currentUserID > 0)
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_main_nonuser, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        super.onOptionsItemSelected(item);
+        Intent i;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        //These items make up the overflow, this is very long and repetitive, but would be the same
+        //on every activity
+        switch (item.getItemId()) {
+            case R.id.favorites:
+                //If the user if logged in.
+                if (currentUserID > 0) {
+                    // Switching to Favorites screen
+                    i = new Intent(getApplicationContext(), FavoriteListActivity.class);
+                    i.putExtra("currentUserID", currentUserID);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getBaseContext(), "You must be logged in first to view favorites.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.profile:
+                if (currentUserID > 0) {
+                    i = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    i.putExtra("currentUserID", currentUserID);
+                    i.putExtra("profileUserID", currentUserID);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getBaseContext(), "You must be logged in first to view your profile.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.logout:
+                if (currentUserID > 0) {
+                    String where = "1=1";
+                    int x = getContentResolver().delete(LoginProvider.CONTENT_URI, where, null);
+                    currentUserID = 0;
+                    i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                    Toast.makeText(getBaseContext(), "You have been logged out.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.login:
+                i = new Intent(getApplicationContext(), LoginActivity.class);
+                i.putExtra("currentUserID", currentUserID);
+                startActivity(i);
+                break;
+            case R.id.register:
+                i = new Intent(getApplicationContext(), RegisterActivity.class);
+                i.putExtra("currentUserID", currentUserID);
+                startActivity(i);
+                break;
+            case R.id.viewMemes:
+                i = new Intent(getApplicationContext(), MemeListActivity.class);
+                i.putExtra("currentUserID", currentUserID);
+                startActivity(i);
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
+    //Gathering all the data for the listview
     public void setModel(final FavoritesData data) {
         this.data = data;
         favorites = (ListView) findViewById(R.id.favoriteList);
-       // list = (ListView) findViewById(R.id.favoriteList);
         FavoritesArrayAdapter adapter = new FavoritesArrayAdapter(this, data.getMemes());
         favorites.setAdapter(adapter);
 
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                // Switching to Register screen
-//                Intent i = new Intent(getApplicationContext(), FavoriteActivity.class);
-//                //i.putExtra("key","value");
-//                StringTest test = (StringTest) memes.get(position);
-//                i.putExtra("url", test.getStr());
-//                i.putExtra("title", test.getStr2());
-//                startActivity(i);
-////                    Toast.makeText(MemeListActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
+        //Setting onclick listener for the listview
         favorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent i = new Intent(getApplicationContext(), MemeViewActivity.class);
-                i.putExtra("meme", data.getMemes().get((int)id).getId());
+                i.putExtra("meme", data.getMemes().get((int) id).getId());
                 i.putExtra("isFavorited", "true");
                 i.putExtra("currentUserID", currentUserID);
                 startActivity(i);

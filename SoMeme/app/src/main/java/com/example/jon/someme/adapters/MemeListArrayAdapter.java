@@ -16,20 +16,21 @@ import com.example.jon.someme.R;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import java.util.List;
+
 /**
  * Created by Jon on 2/13/2015.
  */
 public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
     private Context context;
     private ArrayList<ListMeme> memes;
-    private int rowNum;
-    //private ImageView imageView = null;
 
     public MemeListArrayAdapter(Context context, ArrayList<ListMeme> memes) {
         super(context, R.layout.list_item_meme, memes);
@@ -37,35 +38,9 @@ public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
         this.memes = memes;
     }
 
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            convertView = new LinearLayout(getContext());
-//            String inflater = Context.LAYOUT_INFLATER_SERVICE;
-//            LayoutInflater vi = (LayoutInflater)getContext().getSystemService(inflater);
-//            convertView = vi.inflate(R.layout.list_item_meme, parent, false);
-//
-//
-//            // Product object
-//            StringTest name = getItem(position);
-//            //
-//           TextView txtTitle = (TextView) convertView.findViewById(R.id.txt);
-//            txtTitle.setText(name.getStr2());
-//
-//            // show image
-//            ImageView img = (ImageView)convertView.findViewById(R.id.img);
-//
-//            // download image
-//            ImageDownloader imageDownloader = new ImageDownloader();
-//            imageDownloader.download(name.getStr(), img);
-//
-//            return convertView;
-//        }
-//    }
-
-
     @Override
     public View getView(int position, View row, ViewGroup parent) {
-        if(row == null) {
+        if (row == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.list_item_meme, parent, false);
@@ -79,12 +54,11 @@ public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
 
         new DownloadImageTask(imageView).execute(memes.get(position).getSourceLink());
 
+        votePosView.setText(memes.get(position).getVotes().getPositive() + "");
+        voteNegView.setText(memes.get(position).getVotes().getNegative() + "");
 
-        votePosView.setText(memes.get(position).getVotes().getPositive()+"");
-        voteNegView.setText(memes.get(position).getVotes().getNegative()+"");
-
-        usernameView.setText(memes.get(position).getOwner().getUsername()+"");
-        timestampView.setText(memes.get(position).getTimestamp()+"");
+        usernameView.setText(memes.get(position).getOwner().getUsername() + "");
+        timestampView.setText(memes.get(position).getTimestamp() + "");
 
         return row;
     }
@@ -92,11 +66,12 @@ public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
     //ADDED By Ryan on the 18th of February, 2015
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView image;
+
         public DownloadImageTask() {
 
         }
 
-        public DownloadImageTask(ImageView img){
+        public DownloadImageTask(ImageView img) {
             image = img;
         }
 
@@ -113,11 +88,8 @@ public class MemeListArrayAdapter extends ArrayAdapter<ListMeme> {
             return mIcon11;
         }
 
-
         protected void onPostExecute(Bitmap result) {
-
             image.setImageBitmap(result);
         }
     }
 }
-
